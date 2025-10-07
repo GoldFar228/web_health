@@ -1,0 +1,561 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\trainngprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\trainngprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\trainngprogramexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\trainngprogramexercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\dietservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\dietservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\treainingprogramexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\treainingprogramexerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\treainingprogramservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\treainingprogramservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\exerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\exerciseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\clientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\clientservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\trainingprogramrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\trainingprogramrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\trainingprogramexerciserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\trainingprogramexerciserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\dietrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\dietrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\coachrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\coachrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\clientrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\abstractrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\abstractrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\diet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\diet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\repositories\\exerciserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\repositories\\exerciserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\coach.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\coach.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\exercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\exercise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\services\\coachservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\services\\coachservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\controllers\\exercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\controllers\\exercisecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\controllers\\coachcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\controllers\\coachcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\models\\abstractentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\models\\abstractentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\controllers\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\controllers\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|c:\\users\\lenovo\\desktop\\donottouch\\\u0431\u0434\\4\\web_app_health\\server\\webhealthserver\\webhealthserver\\webhealthserver.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C67AD2AC-27B1-4A00-8686-AF6C2A75CA24}|WebHealthServer\\WebHealthServer.csproj|solutionrelative:webhealthserver\\webhealthserver.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20251005194652_TrainingProgramsAdded.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs",
+              "RelativeToolTip": "WebHealthServer\\Migrations\\20251005194652_TrainingProgramsAdded.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T19:46:52.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TreainingProgramExerciseService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\TreainingProgramExerciseService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\TreainingProgramExerciseService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\TreainingProgramExerciseService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\TreainingProgramExerciseService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T19:44:47.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TrainingProgramExerciseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\TrainingProgramExerciseRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\TrainingProgramExerciseRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\TrainingProgramExerciseRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\TrainingProgramExerciseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T19:30:45.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TrainingProgramRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\TrainingProgramRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\TrainingProgramRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\TrainingProgramRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\TrainingProgramRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:33:11.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\IRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\IRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\IRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\IRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T19:05:48.001Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ClientService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\ClientService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\ClientService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\ClientService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\ClientService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAIwCQAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T19:44:54.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TrainngProgramExercise.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\TrainngProgramExercise.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\TrainngProgramExercise.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\TrainngProgramExercise.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\TrainngProgramExercise.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T18:43:01.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TrainngProgram.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\TrainngProgram.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\TrainngProgram.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\TrainngProgram.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\TrainngProgram.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:32:55.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DietRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\DietRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\DietRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\DietRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\DietRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:32:38.753Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CoachRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\CoachRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\CoachRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\CoachRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\CoachRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T15:58:37.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DietService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\DietService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\DietService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\DietService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\DietService.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAowAgAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:33:58.01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ExerciseService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\ExerciseService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\ExerciseService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\ExerciseService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\ExerciseService.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAIwAgAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:23:51.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TreainingProgramService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\TreainingProgramService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\TreainingProgramService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\TreainingProgramService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\TreainingProgramService.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAwwAgAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:34:31.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ClientRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\ClientRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\ClientRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\ClientRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\ClientRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T19:33:44.525Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AbstractRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\AbstractRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\AbstractRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\AbstractRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\AbstractRepository.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAowCsAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-24T19:56:18.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Diet.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Diet.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\Diet.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Diet.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\Diet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:11:05.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "20251005173717_DietAndTrainingProgramAdded.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs",
+              "RelativeToolTip": "WebHealthServer\\Migrations\\20251005173717_DietAndTrainingProgramAdded.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T17:37:17.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "WebHealthServer\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T16:48:59.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "CoachService.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\CoachService.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Services\\CoachService.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Services\\CoachService.cs",
+              "RelativeToolTip": "WebHealthServer\\Services\\CoachService.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowBoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T15:59:30.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Client.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Client.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\Client.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Client.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\Client.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA8wBgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T16:37:27.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Coach.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Coach.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\Coach.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Coach.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\Coach.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T15:12:15.119Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Program.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Program.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Program.cs",
+              "RelativeToolTip": "WebHealthServer\\Program.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T16:54:12.258Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "20251005162547_ExerciseAdded.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs",
+              "RelativeToolTip": "WebHealthServer\\Migrations\\20251005162547_ExerciseAdded.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:25:47.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "ExerciseController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\ExerciseController.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Controllers\\ExerciseController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\ExerciseController.cs",
+              "RelativeToolTip": "WebHealthServer\\Controllers\\ExerciseController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAADgvxoAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:24:28.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ExerciseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\ExerciseRepository.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Repositories\\ExerciseRepository.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Repositories\\ExerciseRepository.cs",
+              "RelativeToolTip": "WebHealthServer\\Repositories\\ExerciseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:23:27.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Exercise.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Exercise.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\Exercise.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\Exercise.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\Exercise.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T15:56:12.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AbstractEntity.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\AbstractEntity.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Models\\AbstractEntity.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Models\\AbstractEntity.cs",
+              "RelativeToolTip": "WebHealthServer\\Models\\AbstractEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-23T16:41:38.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "CoachController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\CoachController.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Controllers\\CoachController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\CoachController.cs",
+              "RelativeToolTip": "WebHealthServer\\Controllers\\CoachController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAwAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T16:03:45.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\appsettings.json",
+              "RelativeDocumentMoniker": "WebHealthServer\\appsettings.json",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\appsettings.json",
+              "RelativeToolTip": "WebHealthServer\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-23T16:36:36.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ClientController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\ClientController.cs",
+              "RelativeDocumentMoniker": "WebHealthServer\\Controllers\\ClientController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Controllers\\ClientController.cs",
+              "RelativeToolTip": "WebHealthServer\\Controllers\\ClientController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAxwCYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T20:17:14.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "WebHealthServer\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\Properties\\launchSettings.json",
+              "RelativeToolTip": "WebHealthServer\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-23T17:44:38.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "WebHealthServer.csproj",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
+              "RelativeDocumentMoniker": "WebHealthServer\\WebHealthServer.csproj",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\\u0411\u0414\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
+              "RelativeToolTip": "WebHealthServer\\WebHealthServer.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-09-23T16:34:12.359Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

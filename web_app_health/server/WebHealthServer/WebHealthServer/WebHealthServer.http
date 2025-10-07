@@ -1,0 +1,6 @@
+@WebHealthServer_HostAddress = http://localhost:5266
+
+GET {{WebHealthServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
