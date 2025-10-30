@@ -1,0 +1,9 @@
+# Visual Studio files
+.vs/
+*.vsidx
+*.vspcc
+*.vsp
+*.vspx
+*.vspscc
+*.vssettings
+*.vssscc

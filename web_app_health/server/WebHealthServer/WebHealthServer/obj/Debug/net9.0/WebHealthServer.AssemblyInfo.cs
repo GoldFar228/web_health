@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebHealthServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05d44d84c1ab54c0bb831d8dd813a7212fd36111")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebHealthServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebHealthServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

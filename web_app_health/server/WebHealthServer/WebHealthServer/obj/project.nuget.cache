@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1jnlxg3+gRs=",
+  "dgSpecHash": "123T3kn/uso=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
+  "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\automapper\\15.0.1\\automapper.15.0.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

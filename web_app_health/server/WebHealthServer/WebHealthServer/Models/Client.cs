@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using WebHealthServer.Models.Enums;
 
 namespace WebHealthServer.Models
 {
@@ -8,8 +9,9 @@ namespace WebHealthServer.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MidName { get; set; }
-        public DateOnly BirthDate{ get; set; }
+        public DateOnly BirthDate { get; set; }
         public string Email { get; set; }
+        public string? Password { get; set; }
         public string PhoneNumber { get; set; }
         public string HealthIssues { get; set; }
         public string Height { get; set; }
@@ -30,6 +32,6 @@ namespace WebHealthServer.Models
         [ForeignKey(nameof(TrainingProgram))]
         public int TrainingProgramId { get; set; }
 
-
+        public UserRoleEnum Role { get; set; }
     }
 }

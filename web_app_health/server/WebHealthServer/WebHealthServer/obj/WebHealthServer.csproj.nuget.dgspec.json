@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj": {}
+    "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj": {
+    "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
         "projectName": "WebHealthServer",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\WebHealthServer.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\obj\\",
+        "outputPath": "C:\\Users\\Lenovo\\Desktop\\DoNotTouch\\БД\\4\\web_health\\web_app_health\\server\\WebHealthServer\\WebHealthServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
