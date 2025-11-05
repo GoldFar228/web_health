@@ -43,5 +43,11 @@ namespace WebHealthServer.Controllers
             return Unauthorized("Invalid credentials");
         }
 
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterRequest register)
+        {
+
+        }
+
     }
 }

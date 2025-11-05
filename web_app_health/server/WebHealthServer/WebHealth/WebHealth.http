@@ -1,6 +1,0 @@
-@WebHealth_HostAddress = http://localhost:5240
-
-GET {{WebHealth_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
