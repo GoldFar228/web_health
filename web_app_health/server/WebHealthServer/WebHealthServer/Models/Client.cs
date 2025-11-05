@@ -32,6 +32,6 @@ namespace WebHealthServer.Models
         [ForeignKey(nameof(TrainingProgram))]
         public int TrainingProgramId { get; set; }
 
-        public UserRoleEnum Role { get; set; }
+        //public UserRoleEnum Role { get; set; }
     }
 }

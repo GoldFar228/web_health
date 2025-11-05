@@ -7,3 +7,9 @@
 *.vspscc
 *.vssettings
 *.vssscc
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.cache
+*.VC.db

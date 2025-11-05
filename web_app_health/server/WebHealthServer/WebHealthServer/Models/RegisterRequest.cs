@@ -5,9 +5,6 @@ namespace WebHealthServer.Models
 {
     public class RegisterRequest
     {
-        [Column(TypeName = "Varchar(32)")]
-        public string? Name { get; set; }
-
         [Column(TypeName = "Varchar(64)")]
         public string? Email { get; set; }
 
@@ -16,5 +13,7 @@ namespace WebHealthServer.Models
 
         [Column(TypeName = "Varchar(16)")]
         public string? Phone { get; set; }
+
+        public UserRoleEnum Role { get; set; } = UserRoleEnum.User;
     }
 }

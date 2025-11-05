@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "WebHealthServer.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/Login/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "WebHealthServer.Models.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebHealthServer.Controllers.ClientController",
     "Method": "AddClient",
     "RelativePath": "api/Client/AddClient",

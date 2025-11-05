@@ -257,3 +257,7 @@ C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHe
 C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\obj\Debug\net9.0\WebHealthServer.pdb
 C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\obj\Debug\net9.0\WebHealthServer.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\obj\Debug\net9.0\ref\WebHealthServer.dll
+C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Lenovo\Desktop\DoNotTouch\БД\4\web_health\web_app_health\server\WebHealthServer\WebHealthServer\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
