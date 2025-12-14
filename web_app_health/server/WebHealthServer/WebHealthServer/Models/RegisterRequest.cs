@@ -6,6 +6,10 @@ namespace WebHealthServer.Models
     public class RegisterRequest
     {
         [Column(TypeName = "Varchar(64)")]
+        public string? LastName { get; set; }
+        [Column(TypeName = "Varchar(64)")]
+        public string? FirstName { get; set; }
+        [Column(TypeName = "Varchar(64)")]
         public string? Email { get; set; }
 
         [Column(TypeName = "Varchar(64)")]

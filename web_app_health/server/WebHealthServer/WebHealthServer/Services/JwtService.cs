@@ -16,12 +16,13 @@ namespace WebHealthServer.Services
         {
             _configuration = configuration;
         }
-        public string GenerateToken(AuthUser user)
+        public string GenerateToken(Client user)
         {
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.FirstName),
             new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 

@@ -1,0 +1,30 @@
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: fit-content;
+    margin: 0 auto;
+}
+.login-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+input{
+    margin: 0 10px;
+}
+
+.register-link{
+    margin: 2vh;
+    border: 1px solid green;
+}
+.register-link:hover{
+    color: grey;
+    cursor: pointer;
+}
+.register-link:active{
+    color:lightblue
+}

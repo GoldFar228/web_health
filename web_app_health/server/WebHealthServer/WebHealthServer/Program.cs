@@ -41,8 +41,17 @@ var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connStr));
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(Program)); // ← добавление маппера
-
+builder.Services.AddAutoMapper(x => x.AddProfile<MapperProfile>()); // ← добавление маппера
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
 //Добавление репозиториев
 builder.Services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 builder.Services.AddScoped<ClientRepository>();
@@ -56,11 +65,12 @@ builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<TrainingProgramRepository>();
 builder.Services.AddScoped<TrainingProgramService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<AuthService>();
 var app = builder.Build();
 
 app.UseAuthentication(); 
 app.UseAuthorization();
-
+app.UseCors("AllowAll");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {

@@ -11,9 +11,10 @@ namespace WebHealthServer.Models
         public int DaysPerWeek { get; set; } // Тренировок в неделю
         public string Difficulty { get; set; } // "Начинающий", "Средний", "Продвинутый"
 
-        public int ClientId { get; set; }
-        public Client Client { get; set; }
-
+        //public int ClientId { get; set; }
+        //public Client Client { get; set; }
+        [InverseProperty("TrainingPrograms")]
+        public ICollection<Client> Clients { get; set; } = new List<Client>();
         // Коллекция упражнений в программе
         public ICollection<TrainingProgramExercise> ProgramExercises { get; set; } = new List<TrainingProgramExercise>();
     }

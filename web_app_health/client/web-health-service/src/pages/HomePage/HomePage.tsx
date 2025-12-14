@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./HomePage.css"
 import TaskComponent from "../../components/TaskComponent/TaskComponent";
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 
 function HomePage() {
     const [todoList, setTodoList] = useState([]);
-    const [completedTodoList, setCompletedTodoList] = useState([]);
+    // const [completedTodoList, setCompletedTodoList] = useState([]);
     const [newTask, setNewTask] = useState("");
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +39,7 @@ function HomePage() {
     }
     return (
         <>
+            <HeaderComponent />
             <input type="text" placeholder="enter some text" onChange={handleChange}></input>
             <button onClick={addTask}>click me</button>
             {/* <div>{newTask}</div>  */}

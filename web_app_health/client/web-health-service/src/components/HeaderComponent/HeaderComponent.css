@@ -1,0 +1,26 @@
+.header-container{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    position: sticky;
+    border: 2px solid orange;
+}
+.header-item{
+    border:1px solid red
+}
+.header-item:hover{
+    color: grey;
+    cursor: pointer;
+}
+.header-item:active{
+    color: lightgray
+}
+.header-item:nth-child(1){
+    margin-left: 6rem;
+}
+.header-item:last-child{
+    margin-right: 6rem;
+}
+.hidden{
+    display: none;
+}

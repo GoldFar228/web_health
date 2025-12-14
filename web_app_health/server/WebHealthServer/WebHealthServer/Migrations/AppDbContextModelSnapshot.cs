@@ -22,6 +22,21 @@ namespace WebHealthServer.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ClientTrainingProgram", b =>
+                {
+                    b.Property<int>("ClientsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrainingProgramsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ClientsId", "TrainingProgramsId");
+
+                    b.HasIndex("TrainingProgramsId");
+
+                    b.ToTable("ClientTrainingProgram");
+                });
+
             modelBuilder.Entity("WebHealthServer.Models.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -33,10 +48,10 @@ namespace WebHealthServer.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CoachId")
+                    b.Property<int?>("CoachId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DietId")
+                    b.Property<int?>("DietId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
@@ -48,11 +63,9 @@ namespace WebHealthServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("HealthIssues")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Height")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
@@ -60,21 +73,18 @@ namespace WebHealthServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("MidName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TrainingProgramId")
+                    b.Property<int>("Role")
                         .HasColumnType("integer");
 
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -82,9 +92,6 @@ namespace WebHealthServer.Migrations
                     b.HasIndex("CoachId");
 
                     b.HasIndex("DietId");
-
-                    b.HasIndex("TrainingProgramId")
-                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -210,9 +217,6 @@ namespace WebHealthServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("DaysPerWeek")
                         .HasColumnType("integer");
 
@@ -285,31 +289,34 @@ namespace WebHealthServer.Migrations
                     b.ToTable("TrainingProgramExercises");
                 });
 
+            modelBuilder.Entity("ClientTrainingProgram", b =>
+                {
+                    b.HasOne("WebHealthServer.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebHealthServer.Models.TrainingProgram", null)
+                        .WithMany()
+                        .HasForeignKey("TrainingProgramsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WebHealthServer.Models.Client", b =>
                 {
                     b.HasOne("WebHealthServer.Models.Coach", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoachId");
 
                     b.HasOne("WebHealthServer.Models.Diet", "Diet")
                         .WithMany()
-                        .HasForeignKey("DietId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebHealthServer.Models.TrainingProgram", "TrainingProgram")
-                        .WithOne("Client")
-                        .HasForeignKey("WebHealthServer.Models.Client", "TrainingProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DietId");
 
                     b.Navigation("Coach");
 
                     b.Navigation("Diet");
-
-                    b.Navigation("TrainingProgram");
                 });
 
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgramExercise", b =>
@@ -333,9 +340,6 @@ namespace WebHealthServer.Migrations
 
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>
                 {
-                    b.Navigation("Client")
-                        .IsRequired();
-
                     b.Navigation("ProgramExercises");
                 });
 #pragma warning restore 612, 618

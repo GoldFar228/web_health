@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v9.0": {
       "WebHealthServer/1.0.0": {
         "dependencies": {
-          "AutoMapper": "15.0.1",
+          "AutoMapper": "15.1.0",
+          "BCrypt.Net-Core": "1.6.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.2",
           "Microsoft.AspNetCore.OpenApi": "9.0.4",
           "Microsoft.EntityFrameworkCore": "9.0.0",
@@ -24,16 +25,24 @@
           "WebHealthServer.dll": {}
         }
       },
-      "AutoMapper/15.0.1": {
+      "AutoMapper/15.1.0": {
         "dependencies": {
-          "Microsoft.Extensions.Logging": "9.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
           "Microsoft.Extensions.Options": "9.0.0",
           "Microsoft.IdentityModel.JsonWebTokens": "8.14.0"
         },
         "runtime": {
           "lib/net9.0/AutoMapper.dll": {
             "assemblyVersion": "15.0.0.0",
-            "fileVersion": "15.0.1.0"
+            "fileVersion": "15.1.0.0"
+          }
+        }
+      },
+      "BCrypt.Net-Core/1.6.0": {
+        "runtime": {
+          "lib/netstandard2.0/BCrypt.Net-Core.dll": {
+            "assemblyVersion": "1.6.0.0",
+            "fileVersion": "1.6.0.0"
           }
         }
       },
@@ -725,12 +734,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AutoMapper/15.0.1": {
+    "AutoMapper/15.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kNo7iIAi4p4XxoEbfif2WUQtc6RTx+UteiRYPqCOKj+4q4+YaWono06qTxoHBy+0N1HdganA//k5p/VmWw2AMA==",
-      "path": "automapper/15.0.1",
-      "hashPath": "automapper.15.0.1.nupkg.sha512"
+      "sha512": "sha512-uJXRC0ysO+i3fuW1onh0cUmaLbEwfMWwAZ5nw2eKhYccHwDgRhSC4Qj3rNdBy4vdhnC3r4NinhhldANKNWpH1Q==",
+      "path": "automapper/15.1.0",
+      "hashPath": "automapper.15.1.0.nupkg.sha512"
+    },
+    "BCrypt.Net-Core/1.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hsKiHGjrnlDW05MzuzzlD9gNP8YOW2KbZ+FbvISrilsKJJ76tXKhWey6psZX5sd7DczNpSU2U6ldjPoblk8BLw==",
+      "path": "bcrypt.net-core/1.6.0",
+      "hashPath": "bcrypt.net-core.1.6.0.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
