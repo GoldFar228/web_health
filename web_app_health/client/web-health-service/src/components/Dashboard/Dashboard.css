@@ -1,0 +1,108 @@
+/* src/components/home/Dashboard.css */
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  color: white;
+}
+
+.dashboard-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.2rem;
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.quick-stats-section {
+  grid-column: span 4;
+}
+
+.today-section {
+  grid-column: span 4;
+}
+
+.progress-section {
+  grid-column: span 4;
+}
+
+.actions-section {
+  grid-column: span 6;
+}
+
+.motivation-section {
+  grid-column: span 6;
+}
+
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .quick-stats-section,
+  .today-section,
+  .progress-section,
+  .actions-section,
+  .motivation-section {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-stats-section,
+  .today-section,
+  .progress-section,
+  .actions-section,
+  .motivation-section {
+    grid-column: span 1;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.motivation-card {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 20px;
+  border-radius: 10px;
+  height: 100%;
+}
+
+.motivation-card h3 {
+  margin: 0 0 10px 0;
+  color: #856404;
+}
+
+.motivation-card p {
+  margin: 0;
+  color: #856404;
+  font-style: italic;
+}

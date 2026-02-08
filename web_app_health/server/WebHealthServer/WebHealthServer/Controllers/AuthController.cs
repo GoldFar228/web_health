@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using WebHealthServer.Hubs;
 using WebHealthServer.Models;
 using WebHealthServer.Repositories;
 using WebHealthServer.Services;
@@ -17,14 +20,13 @@ namespace WebHealthServer.Controllers
         {
             _service = service;
         }
-
+        
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
             var token = await _service.LoginAsync(login);
             if (token == null) 
                 return Unauthorized("Invalid credentials");
-
             return Ok(token);
             // TODO: Заменить на реальную проверку из базы данных
             //if (login.Email.Contains("admin") && login.Password == "admin")

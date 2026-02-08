@@ -1,0 +1,146 @@
+
+.progress-chart {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.chart-container {
+  margin: 25px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.chart {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 200px;
+  padding: 0 10px;
+  position: relative;
+}
+
+.chart::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.chart-bar-wrapper {
+  height: 150px;
+  width: 30px;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.chart-bar {
+  width: 100%;
+  background: linear-gradient(to top, #4dabf7, #339af0);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.5s ease;
+  position: relative;
+  box-shadow: 0 -2px 10px rgba(51, 154, 240, 0.2);
+}
+
+.chart-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(to bottom, #74c0fc, #4dabf7);
+  border-radius: 6px 6px 0 0;
+}
+
+.chart-label {
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.chart-value {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.chart-workouts {
+  font-size: 0.8rem;
+  color: #868e96;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.progress-summary {
+  display: flex;
+  justify-content: space-around;
+  background: #f1f3f5;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #343a40;
+}
+
+.summary-item.positive .summary-value {
+  color: #2b8a3e;
+}
+
+.summary-item.negative .summary-value {
+  color: #c92a2a;
+}
+
+@media (max-width: 768px) {
+  .chart {
+    height: 150px;
+  }
+  
+  .chart-bar-wrapper {
+    height: 100px;
+    width: 20px;
+  }
+  
+  .progress-summary {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .summary-value {
+    font-size: 1.1rem;
+  }
+}

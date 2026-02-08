@@ -4,16 +4,22 @@
     justify-content: space-between;
     position: sticky;
     border: 2px solid orange;
+    background-color: #FFFFFF;
 }
 .header-item{
-    border:1px solid red
+    border:1px solid red;
+    color: #1F2937;
 }
 .header-item:hover{
-    color: grey;
+    color: #4CAF50;
     cursor: pointer;
+    transition: ease-in;
+    transition-duration: 0.2s;
 }
 .header-item:active{
-    color: lightgray
+    color: #addeb0;
+    transition: ease-in;
+    transition-duration: 0.2s;
 }
 .header-item:nth-child(1){
     margin-left: 6rem;

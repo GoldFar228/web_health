@@ -2,13 +2,15 @@ import axios from "axios";
 import "./LoginComponent.css"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginStart, loginFailure, loginSuccess } from "../../store/authSlice";
 
 const LoginComponent = () => {
     const [formData, setformData] = useState({
         email: "",
         password: ""
     });
-    
+
     const handleChange = (e) => {
         setformData({
             ...formData,
@@ -20,9 +22,38 @@ const LoginComponent = () => {
     const navigateTo = (str: string) => {
         navigate(`${str}`)
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Предотвращаем перезагрузку страницы
+    const dispatch = useDispatch();
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const payload = formData; // твои данные
+
+        dispatch(loginStart());
+
+        try {
+            const res = await axios.post("https://localhost:7073/api/Auth/Login/login", payload);
+            const { token, ErrorMessage } = res.data;
+
+            if (ErrorMessage) {
+                dispatch(loginFailure(ErrorMessage));
+                return;
+            }
+
+            if (!token) {
+                dispatch(loginFailure("Не получен токен"));
+                return;
+            }
+
+            // Получаем профиль
+            const profileRes = await axios.get("https://localhost:7073/api/Client/GetMyProfile/me", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            dispatch(loginSuccess({ token, profile: profileRes.data }));
+            navigate('/Home');
+        } catch (err: any) {
+            dispatch(loginFailure(err.message || 'Ошибка сети'));
+        }
         try {
             const response = await axios.post("https://localhost:7073/api/Auth/Login/login",
                 formData, {
@@ -38,7 +69,7 @@ const LoginComponent = () => {
         catch (error) {
             console.log('Провал', error.message)
         }
-        
+
     }
     return (
         <>
@@ -56,7 +87,7 @@ const LoginComponent = () => {
                 </form>
                 <div>
                     Нет аккаунта?
-                    <div className="register-link" onClick={() => {navigateTo("../Register")}}>зарегистрироваться</div>
+                    <div className="register-link" onClick={() => { navigateTo("../Register") }}>зарегистрироваться</div>
                 </div>
             </div>
         </>

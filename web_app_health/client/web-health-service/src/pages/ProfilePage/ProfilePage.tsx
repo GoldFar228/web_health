@@ -1,13 +1,10 @@
-import { useState } from "react";
 import "./ProfilePage.css"
-import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
-import ProfileComponent from "../../components/RegisterComponent/ProfileComponent";
+import ProfileComponent from "../../components/ProfileComponent/ProfileComponent";
 
 function ProfilePage() {
     
     return (
         <>
-            <HeaderComponent />
             <ProfileComponent />
         </>
     );

@@ -1,0 +1,85 @@
+
+.quick-actions {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.action-button {
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: var(--action-color);
+}
+
+.action-button:hover .action-icon {
+  transform: scale(1.1);
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--action-color);
+  transition: height 0.3s ease;
+}
+
+.action-button:hover::before {
+  height: 8px;
+}
+
+.action-icon {
+  font-size: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+.action-title {
+  font-weight: 600;
+  color: #343a40;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 992px) {
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-button {
+    min-height: 100px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

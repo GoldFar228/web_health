@@ -1,0 +1,127 @@
+
+.today-workouts {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.workouts-list,
+.meals-list {
+  margin-bottom: 30px;
+}
+
+.workouts-list h3,
+.meals-list h3 {
+  font-size: 1.2rem;
+  color: #495057;
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.workout-item,
+.meal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #007bff;
+  transition: all 0.3s ease;
+}
+
+.meal-item {
+  border-left-color: #28a745;
+}
+
+.workout-item:hover,
+.meal-item:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+.workout-info,
+.meal-info {
+  flex: 1;
+}
+
+.workout-title,
+.meal-title {
+  font-weight: 600;
+  color: #343a40;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.workout-time,
+.meal-calories {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.status-badge {
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.запланировано,
+.status-badge.ожидает {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.записан {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.не\ записан {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: #6c757d;
+  font-style: italic;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.total-calories {
+  text-align: right;
+  padding: 15px;
+  background: #e9ecef;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.total-calories strong {
+  color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .workout-item,
+  .meal-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .status-badge {
+    align-self: flex-start;
+  }
+}

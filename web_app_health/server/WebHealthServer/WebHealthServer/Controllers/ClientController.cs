@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebHealthServer.Models;
 using WebHealthServer.Repositories;
@@ -34,9 +36,7 @@ namespace WebHealthServer.Controllers
                 return StatusCode(500, "Произошла внутренняя ошибка сервера");
             }
         }
-
-
-        [HttpGet("")]
+        [HttpGet]
         public async Task<ActionResult<Client>> GetClientById([FromQuery] int id)
         {
             try
@@ -65,18 +65,8 @@ namespace WebHealthServer.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Client>> UpdateClient(int id, [FromBody] UpdateClientDTO client)
+        public async Task<ActionResult<Client>> UpdateClient([FromRoute] int id, [FromBody] UpdateClientDTO client)
         {
-            //if (client == null)
-            //{
-            //    return BadRequest("Данные клиента не могут быть пустыми");
-            //}
-            //if (id != client.Id)
-            //{
-            //    return BadRequest("ID в пути не совпадает с ID в теле запроса");
-            //}
-            //var updatedClient = await _service.UpdateClientAsync(client);
-            //return Ok(updatedClient);
             try
             {
                 if (!ModelState.IsValid)
@@ -155,6 +145,26 @@ namespace WebHealthServer.Controllers
                 return BadRequest("Не удалось удалить клиента");
 
             return Ok(result);
+        }
+        [HttpGet("me")]
+        [Authorize] 
+        public async Task<ActionResult<Client>> GetMyProfile()
+        {
+            // Извлекаем ID пользователя из токена
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized("Невозможно определить пользователя");
+            }
+
+            // Получаем клиента по ID
+            var client = await _service.GetClientByIdAsync(userId);
+            if (client == null)
+            {
+                return NotFound("Профиль не найден");
+            }
+
+            return Ok(client);
         }
     }
 }

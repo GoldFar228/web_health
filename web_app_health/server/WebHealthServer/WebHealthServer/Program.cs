@@ -4,13 +4,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using WebHealthServer.Data;
+using WebHealthServer.Hubs;
+using WebHealthServer.Middleware;
 using WebHealthServer.Repositories;
 using WebHealthServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(7073, listenOptions => listenOptions.UseHttps());
+});
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -24,7 +29,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                Convert.FromBase64String(builder.Configuration["Jwt:Key"]))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if (context.Request.Path.StartsWithSegments("/hubs/auth"))
+                {
+                    var accessToken = context.Request.Query["access_token"];
+                    if (!string.IsNullOrEmpty(accessToken))
+                    {
+                        context.Token = accessToken;
+                    }
+                }
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -47,9 +67,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
+            policy.WithOrigins("http://localhost:5173") // ← твой React-клиент
+              .AllowCredentials() // ← обязательно!
+              .AllowAnyMethod()
+              .AllowAnyHeader();
         });
 });
 //Добавление репозиториев
@@ -65,12 +86,23 @@ builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<TrainingProgramRepository>();
 builder.Services.AddScoped<TrainingProgramService>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AuthService>(); 
+builder.Services.AddSignalR();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
-app.UseAuthentication(); 
-app.UseAuthorization();
+app.UseHttpsRedirection();
+app.UseWebSockets(); // ← ДО UseRouting()
+app.UseRouting(); // ← SignalR требует маршрутизацию
 app.UseCors("AllowAll");
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+// Маршрут для SignalR
+app.MapHub<AuthHub>("/hubs/auth");
+
+app.MapControllers();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
@@ -78,13 +110,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.MapOpenApi();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
 
 using (var scope = app.Services.CreateScope())
 {

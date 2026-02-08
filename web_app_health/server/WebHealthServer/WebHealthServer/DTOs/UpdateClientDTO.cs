@@ -3,7 +3,7 @@ using WebHealthServer.Models.Enums;
 
 namespace WebHealthServer.Models
 {
-    public class UpdateClientDTO : AbstractEntity
+    public class UpdateClientDTO
     {
         public string? LastName { get; set; }
         public string? FirstName { get; set; }

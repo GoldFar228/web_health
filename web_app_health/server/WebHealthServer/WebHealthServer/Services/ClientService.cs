@@ -81,5 +81,10 @@ namespace WebHealthServer.Services
         {
             return await _clientRepository.ExistAsync(id);
         }
+
+        public async Task<Client> GetMyProfile(int id)
+        {
+            return await GetClientByIdAsync(id);
+        }
     }
 }
