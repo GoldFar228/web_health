@@ -10,6 +10,10 @@ namespace WebHealthServer.Models
         public string Protein { get; set; } // Белки (г) 1г = 4ккал 
         public string Carbs { get; set; } // Углеводы (г) 1г = 4ккал 
         public string Fats { get; set; } // Жиры (г) 1г = 9ккал 
-        public string MealPlan { get; set; } // План питания (текст или JSON)
+        //public string MealPlan { get; set; } // План питания (текст или JSON)
+        public DateOnly Date { get; set; } //дата внесения продукта
+        //public Client Client { get; set; }
+        //[ForeignKey(nameof(Client))]
+        //public int ClientId { get; set; }
     }
 }

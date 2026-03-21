@@ -147,15 +147,14 @@ namespace WebHealthServer.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Fats")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MealPlan")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -207,6 +206,82 @@ namespace WebHealthServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("WebHealthServer.Models.MealEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Brand")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal>("Calories")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Carbohydrates")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("EntryDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("EntryTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<decimal>("Fat")
+                        .HasColumnType("numeric");
+
+                    b.Property<long?>("FatSecretFoodId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FatSecretFoodUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FoodName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("MealType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal>("Protein")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("EntryDate");
+
+                    b.ToTable("MealEntry");
                 });
 
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>
@@ -319,6 +394,17 @@ namespace WebHealthServer.Migrations
                     b.Navigation("Diet");
                 });
 
+            modelBuilder.Entity("WebHealthServer.Models.MealEntry", b =>
+                {
+                    b.HasOne("WebHealthServer.Models.Client", "Client")
+                        .WithMany("MealEntries")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgramExercise", b =>
                 {
                     b.HasOne("WebHealthServer.Models.Exercise", "Exercise")
@@ -336,6 +422,11 @@ namespace WebHealthServer.Migrations
                     b.Navigation("Exercise");
 
                     b.Navigation("TrainingProgram");
+                });
+
+            modelBuilder.Entity("WebHealthServer.Models.Client", b =>
+                {
+                    b.Navigation("MealEntries");
                 });
 
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>

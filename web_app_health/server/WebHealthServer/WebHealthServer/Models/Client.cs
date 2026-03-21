@@ -5,7 +5,7 @@ namespace WebHealthServer.Models
 {
     public class Client : AbstractEntity
     {
-        //public int Id { get; set; } 
+        //public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string? MidName { get; set; }
@@ -17,23 +17,22 @@ namespace WebHealthServer.Models
         public string? Height { get; set; }
         public string? Weight { get; set; }
 
+        // Связи с другими сущностями
         public Coach? Coach { get; set; }
-
         [ForeignKey(nameof(Coach))]
         public int? CoachId { get; set; }
 
-        public Diet? Diet { get; set; }
-
+        public Diet? Diet { get; set; } // Оставьте, если будете использовать позже
         [ForeignKey(nameof(Diet))]
         public int? DietId { get; set; }
 
         [InverseProperty("Clients")]
         public ICollection<TrainingProgram> TrainingPrograms { get; set; } = new List<TrainingProgram>();
-        //public TrainingProgram? TrainingProgram { get; set; }
-
-        //[ForeignKey(nameof(TrainingProgram))]
-        //public int? TrainingProgramId { get; set; }
 
         public UserRoleEnum Role { get; set; }
+
+        // ✅ ВАЖНО: Добавьте связь с MealEntry
+        [InverseProperty("Client")]
+        public ICollection<MealEntry> MealEntries { get; set; } = new List<MealEntry>();
     }
 }

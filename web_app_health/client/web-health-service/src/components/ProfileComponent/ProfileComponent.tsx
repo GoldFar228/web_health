@@ -24,6 +24,15 @@ const ProfileComponent = () => {
     });
     const dispatch = useDispatch();
     // const { profile, isLoading } = useSelector((state: RootState) => state.auth);
+    
+    const handleLogout = () => {
+        // Logout уже есть в хуке useProfile через dispatch(logout())
+        // Просто перенаправьте на страницу входа
+        window.location.href = '/auth/login';
+    };
+
+    const navigate = useNavigate();
+    useAuthSignalR(handleLogout);
 
     useEffect(() => {
         if (isAuthenticated && profile) {
@@ -86,14 +95,7 @@ const ProfileComponent = () => {
         }
     };
 
-    const handleLogout = () => {
-        // Logout уже есть в хуке useProfile через dispatch(logout())
-        // Просто перенаправьте на страницу входа
-        window.location.href = '/auth/login';
-    };
-
-    const navigate = useNavigate();
-    useAuthSignalR(handleLogout);
+    
 
     return (
         <div className="profile-page">

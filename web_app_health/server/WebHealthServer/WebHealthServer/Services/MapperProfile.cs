@@ -30,6 +30,23 @@ namespace WebHealthServer.Services
                 .ForMember(x => x.Role, opt => opt.Ignore()) //роль тоже
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) =>
                     srcMember != null));// Обновляем только те поля, которые пришли в запросе
+
+            CreateMap<CreateMealEntryDto, MealEntry>()
+                .ForMember(dest => dest.EntryTime,
+                    opt => opt.MapFrom(src =>
+                        string.IsNullOrEmpty(src.EntryTime)
+                            ? TimeOnly.FromDateTime(DateTime.UtcNow)
+                            : TimeOnly.Parse(src.EntryTime.Replace("Z", ""))))
+                // Вычисляемые свойства игнорируем - они сами вычисляются
+                .ForMember(dest => dest.Year, opt => opt.Ignore())
+                .ForMember(dest => dest.Month, opt => opt.Ignore())
+                .ForMember(dest => dest.Day, opt => opt.Ignore());
+            // AfterMap не нужен!
+
+            CreateMap<MealEntry, MealEntryResponseDto>()
+                .ForMember(dest => dest.EntryTime,
+                    opt => opt.MapFrom(src => src.EntryTime.HasValue ?
+                        src.EntryTime.Value.ToTimeSpan() : (TimeSpan?)null));
         }
     }
 }

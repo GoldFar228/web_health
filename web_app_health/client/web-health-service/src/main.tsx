@@ -11,6 +11,7 @@ import { PrivateRoute } from './components/PrivateRoute/PrivateRoute.tsx'
 import HeaderComponent from './components/HeaderComponent/HeaderComponent.tsx'
 import { Provider } from 'react-redux'
 import { store } from './store/index.ts'
+import DietPage from './pages/DietPage/DietPage.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -22,8 +23,12 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/' element={<App />} />
           <Route path='/Home' element={<HomePage />} />
           <Route path='/Trainings' element={<HomePage />} />
-          <Route path='/Diets' element={<HomePage />} />
           <Route path='/Auth/*' element={<AuthorizePage />} />
+          <Route path='/Diets' element={
+            <PrivateRoute>
+              <DietPage />
+            </PrivateRoute>
+          } />
           <Route path='/Profile' element={
             <PrivateRoute>
               <ProfilePage />

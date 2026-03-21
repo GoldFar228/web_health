@@ -12,8 +12,8 @@ using WebHealthServer.Data;
 namespace WebHealthServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251105140253_AuthAdded")]
-    partial class AuthAdded
+    [Migration("20260210131234_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace WebHealthServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ClientTrainingProgram", b =>
+                {
+                    b.Property<int>("ClientsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TrainingProgramsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ClientsId", "TrainingProgramsId");
+
+                    b.HasIndex("TrainingProgramsId");
+
+                    b.ToTable("ClientTrainingProgram");
+                });
 
             modelBuilder.Entity("WebHealthServer.Models.Client", b =>
                 {
@@ -36,10 +51,10 @@ namespace WebHealthServer.Migrations
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("CoachId")
+                    b.Property<int?>("CoachId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DietId")
+                    b.Property<int?>("DietId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
@@ -51,11 +66,9 @@ namespace WebHealthServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("HealthIssues")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Height")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
@@ -63,21 +76,18 @@ namespace WebHealthServer.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("MidName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("TrainingProgramId")
+                    b.Property<int>("Role")
                         .HasColumnType("integer");
 
                     b.Property<string>("Weight")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -85,9 +95,6 @@ namespace WebHealthServer.Migrations
                     b.HasIndex("CoachId");
 
                     b.HasIndex("DietId");
-
-                    b.HasIndex("TrainingProgramId")
-                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -143,15 +150,14 @@ namespace WebHealthServer.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Fats")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MealPlan")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -205,7 +211,7 @@ namespace WebHealthServer.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>
+            modelBuilder.Entity("WebHealthServer.Models.MealEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,8 +219,73 @@ namespace WebHealthServer.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Brand")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<decimal>("Calories")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Carbohydrates")
+                        .HasColumnType("numeric");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("EntryDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("EntryTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<decimal>("Fat")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("FoodName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("MealType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<decimal>("Protein")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MealEntries");
+                });
+
+            modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("DaysPerWeek")
                         .HasColumnType("integer");
@@ -288,31 +359,45 @@ namespace WebHealthServer.Migrations
                     b.ToTable("TrainingProgramExercises");
                 });
 
+            modelBuilder.Entity("ClientTrainingProgram", b =>
+                {
+                    b.HasOne("WebHealthServer.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ClientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebHealthServer.Models.TrainingProgram", null)
+                        .WithMany()
+                        .HasForeignKey("TrainingProgramsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WebHealthServer.Models.Client", b =>
                 {
                     b.HasOne("WebHealthServer.Models.Coach", "Coach")
                         .WithMany()
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CoachId");
 
                     b.HasOne("WebHealthServer.Models.Diet", "Diet")
                         .WithMany()
-                        .HasForeignKey("DietId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebHealthServer.Models.TrainingProgram", "TrainingProgram")
-                        .WithOne("Client")
-                        .HasForeignKey("WebHealthServer.Models.Client", "TrainingProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DietId");
 
                     b.Navigation("Coach");
 
                     b.Navigation("Diet");
+                });
 
-                    b.Navigation("TrainingProgram");
+            modelBuilder.Entity("WebHealthServer.Models.MealEntry", b =>
+                {
+                    b.HasOne("WebHealthServer.Models.Client", "Client")
+                        .WithMany("MealEntries")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgramExercise", b =>
@@ -334,11 +419,13 @@ namespace WebHealthServer.Migrations
                     b.Navigation("TrainingProgram");
                 });
 
+            modelBuilder.Entity("WebHealthServer.Models.Client", b =>
+                {
+                    b.Navigation("MealEntries");
+                });
+
             modelBuilder.Entity("WebHealthServer.Models.TrainingProgram", b =>
                 {
-                    b.Navigation("Client")
-                        .IsRequired();
-
                     b.Navigation("ProgramExercises");
                 });
 #pragma warning restore 612, 618

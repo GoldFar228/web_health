@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using WebHealthServer.Data;
 using WebHealthServer.Hubs;
@@ -50,11 +51,48 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+//builder.Services.AddOpenApi();
 
 // Добавляем Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Fitness API",
+        Version = "v1",
+        Description = "API для управления фитнес-приложением"
+    });
+
+    // Добавляем схему авторизации Bearer
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Введите токен JWT в формате: Bearer {your token}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+
+    // Применяем авторизацию ко всем операциям
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+
+    // Добавляем информацию о файлах (если используешь)
+    //c.EnableAnnotations();
+});
 
 var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -73,7 +111,17 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
         });
 });
+// MemoryCache для кэширования токена
+builder.Services.AddMemoryCache();
+
+// HttpClient для внешних запросов
+builder.Services.AddHttpClient();
 //Добавление репозиториев
+builder.Services.AddScoped<IFatSecretTokenService, FatSecretTokenService>();
+//builder.Services.AddScoped<INutritionService, FatSecretApiService>();
+builder.Services.AddScoped<IFatSecretApiService, FatSecretApiService>();
+builder.Services.AddScoped<INutritionService, NutritionService>();
+builder.Services.AddScoped<IFatSecretOAuth1Service, FatSecretOAuth1Service>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<ClientService>();
@@ -81,6 +129,8 @@ builder.Services.AddScoped<CoachRepository>();
 builder.Services.AddScoped<CoachService>();
 builder.Services.AddScoped<DietRepository>();
 builder.Services.AddScoped<DietService>();
+builder.Services.AddScoped<MealEntryRepository>();
+builder.Services.AddScoped<MealEntryService>();
 builder.Services.AddScoped<ExerciseRepository>();
 builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<TrainingProgramRepository>();
@@ -107,7 +157,7 @@ app.MapControllers();
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
-    app.MapOpenApi();
+    //app.MapOpenApi();
     app.UseSwaggerUI();
 }
 
