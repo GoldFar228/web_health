@@ -1,12 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebHealthServer.Models
 {
     public class FatSecretTokenResponse
     {
-        public string access_token { get; set; }
-        public string token_type { get; set; } // "Bearer"
-        public int expires_in { get; set; }    // 86400 (24 часа)
+        [JsonPropertyName("access_token")]
+        public string AccessToken { get; set; } = string.Empty;
+
+        [JsonPropertyName("token_type")]
+        public string TokenType { get; set; } = string.Empty;
+
+        [JsonPropertyName("expires_in")]
+        public int ExpiresIn { get; set; }
+
+        [JsonIgnore]
+        public DateTime ExpiresAt { get; set; }
+
+        [JsonIgnore]
+        public bool IsValid => DateTime.UtcNow < ExpiresAt.AddMinutes(-5); // 5 мин запас
     }
 }
 

@@ -22,7 +22,7 @@ namespace WebHealthServer.Services
                 //.ForMember(x => x.TrainingProgramId, opt => opt.MapFrom(_ => (int?)null))
                 .ForMember(x => x.Coach, opt => opt.Ignore())
                 .ForMember(x => x.Diet, opt => opt.Ignore());
-                //.ForMember(x => x.TrainingProgram, opt => opt.Ignore());
+            //.ForMember(x => x.TrainingProgram, opt => opt.Ignore());
 
             CreateMap<UpdateClientDTO, Client>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
@@ -47,6 +47,64 @@ namespace WebHealthServer.Services
                 .ForMember(dest => dest.EntryTime,
                     opt => opt.MapFrom(src => src.EntryTime.HasValue ?
                         src.EntryTime.Value.ToTimeSpan() : (TimeSpan?)null));
+            CreateMap<CreateMealEntryDto, MealEntry>()
+            // Маппинг TimeOnly из строки
+            .ForMember(dest => dest.EntryTime,
+                opt => opt.MapFrom(src => ParseTimeOnlyFromString(src.EntryTime)))
+
+
+            // Вычисляемые свойства игнорируем
+            .ForMember(dest => dest.Year, opt => opt.Ignore())
+            .ForMember(dest => dest.Month, opt => opt.Ignore())
+            .ForMember(dest => dest.Day, opt => opt.Ignore())
+
+            // Нутриенты: если null в DTO → 0 в Entity (защита от null)
+            .ForMember(dest => dest.Calories, opt => opt.MapFrom(src => src.Calories ?? 0))
+            .ForMember(dest => dest.Protein, opt => opt.MapFrom(src => src.Protein ?? 0))
+            .ForMember(dest => dest.Carbohydrates, opt => opt.MapFrom(src => src.Carbohydrates ?? 0))
+            .ForMember(dest => dest.Fat, opt => opt.MapFrom(src => src.Fat ?? 0))
+
+            // Поля, которые заполняются в сервисе (не из DTO)
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.ClientId, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.FatSecretFoodId, opt => opt.Ignore()); // 🔗 заполняем вручную
+
+            //CreateMap<MealEntry, MealEntryResponseDto>()
+            //    // TimeSpan? для совместимости с JSON (опционально)
+            //    .ForMember(dest => dest.EntryTime,
+            //        opt => opt.MapFrom(src => src.EntryTime.HasValue ?
+            //            src.EntryTime.Value.ToTimeSpan() : (TimeSpan?)null));
+            CreateMap<MealEntry, MealEntryResponseDto>()
+                .ForMember(dest => dest.EntryTime,
+                    opt => opt.MapFrom(src => src.EntryTime.HasValue ?
+                        src.EntryTime.Value.ToString("HH:mm:ss") : null));
         }
+        private static TimeOnly? ParseTimeOnlyFromString(string? timeString)
+        {
+            if (string.IsNullOrEmpty(timeString))
+                return TimeOnly.FromDateTime(DateTime.UtcNow);
+
+            try
+            {
+                // Убираем 'Z' и миллисекунды, оставляем "HH:mm:ss"
+                var cleanTime = timeString.Replace("Z", "").Split('.')[0];
+
+                if (TimeOnly.TryParseExact(cleanTime, "HH:mm:ss", out var result))
+                    return result;
+
+                if (TimeOnly.TryParse(cleanTime, out result))
+                    return result;
+
+                return TimeOnly.FromDateTime(DateTime.UtcNow);
+            }
+            catch
+            {
+                return TimeOnly.FromDateTime(DateTime.UtcNow);
+            }
+        }
+
     }
 }
+

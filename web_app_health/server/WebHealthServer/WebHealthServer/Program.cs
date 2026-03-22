@@ -111,18 +111,23 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
         });
 });
+builder.Services.Configure<FatSecretOptions>(
+    builder.Configuration.GetSection(FatSecretOptions.SectionName));
 // MemoryCache для кэширования токена
 builder.Services.AddMemoryCache();
 
+builder.Services.AddHttpClient<FatSecretService>(client =>
+{
+    client.BaseAddress = new Uri("https://platform.fatsecret.com");
+    client.DefaultRequestHeaders.Accept.Add(
+        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+});
 // HttpClient для внешних запросов
 builder.Services.AddHttpClient();
 //Добавление репозиториев
-builder.Services.AddScoped<IFatSecretTokenService, FatSecretTokenService>();
-//builder.Services.AddScoped<INutritionService, FatSecretApiService>();
-builder.Services.AddScoped<IFatSecretApiService, FatSecretApiService>();
-builder.Services.AddScoped<INutritionService, NutritionService>();
-builder.Services.AddScoped<IFatSecretOAuth1Service, FatSecretOAuth1Service>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
+builder.Services.AddScoped<IMealEntryService, MealEntryService>();
+builder.Services.AddScoped<FatSecretService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(FatSecretOptions<>));
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<CoachRepository>();

@@ -10,7 +10,7 @@ namespace WebHealthServer.Models
         public int Id { get; set; }
         public DateOnly EntryDate { get; set; }
 
-        public TimeOnly? EntryTime { get; set; }
+        public string? EntryTime { get; set; }
         public string MealType { get; set; }
         public string FoodName { get; set; }
         public decimal Quantity { get; set; }

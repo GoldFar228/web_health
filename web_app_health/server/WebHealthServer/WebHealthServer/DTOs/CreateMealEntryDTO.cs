@@ -14,12 +14,15 @@ namespace WebHealthServer.Models
         public string? EntryTime { get; set; }
         public string MealType { get; set; } = "other";
         public string FoodName { get; set; }
+        public string? Brand { get; set; }
         public decimal Quantity { get; set; }
-        public string Unit { get; set; } = "g";
-        public decimal Calories { get; set; }
-        public decimal Protein { get; set; }
-        public decimal Carbohydrates { get; set; }
-        public decimal Fat { get; set; }
+        public string Unit { get; set; } = "g"; 
+        public string? FatSecretFoodId { get; set; } // 🔗 Опционально: если берём из API
+        public decimal? Calories { get; set; }
+        public decimal? Protein { get; set; }
+        public decimal? Carbohydrates { get; set; }
+        public decimal? Fat { get; set; }
         public string? Notes { get; set; }
+
     }
 }

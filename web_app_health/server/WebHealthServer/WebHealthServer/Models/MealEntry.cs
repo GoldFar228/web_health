@@ -52,7 +52,8 @@ namespace WebHealthServer.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
-
+        [MaxLength(50)]
+        public string? FatSecretFoodId { get; set; } // 🔗 Ссылка на продукт в FatSecret
 
         // Дополнительно
         [MaxLength(500)]
@@ -62,8 +63,5 @@ namespace WebHealthServer.Models
         public int Year => EntryDate.Year;
         public int Month => EntryDate.Month;
         public int Day => EntryDate.Day;
-
-        public long? FatSecretFoodId { get; set; }  // ID продукта из FatSecret
-        public string? FatSecretFoodUrl { get; set; } // Ссылка на продукт (опционально)
     }
 }

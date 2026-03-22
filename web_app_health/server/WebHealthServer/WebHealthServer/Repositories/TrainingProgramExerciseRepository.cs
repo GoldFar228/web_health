@@ -3,7 +3,7 @@ using WebHealthServer.Models;
 
 namespace WebHealthServer.Repositories
 {
-    public class TrainingProgramExerciseRepository : AbstractRepository<TrainingProgramExercise>
+    public class TrainingProgramExerciseRepository : FatSecretOptions<TrainingProgramExercise>
     {
         public TrainingProgramExerciseRepository(AppDbContext context) : base(context)
         {

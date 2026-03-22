@@ -4,12 +4,12 @@ using WebHealthServer.Models;
 
 namespace WebHealthServer.Repositories
 {
-    public class AbstractRepository<T> : IRepository<T> where T : AbstractEntity
+    public class FatSecretOptions<T> : IRepository<T> where T : AbstractEntity
     {
         protected readonly AppDbContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public AbstractRepository(AppDbContext context)
+        public FatSecretOptions(AppDbContext context)
         {
             var clients = context.Clients.ToList();
             _context = context;

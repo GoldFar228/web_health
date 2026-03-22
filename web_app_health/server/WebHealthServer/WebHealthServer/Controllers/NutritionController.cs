@@ -13,143 +13,60 @@ namespace WebHealthServer.Controllers
     [Route("api/[controller]/[action]")]
     public class NutritionController : ControllerBase
     {
-        private readonly INutritionService _nutritionService;
+        private readonly FatSecretService _fatSecretService;
         private readonly ILogger<NutritionController> _logger;
+
         public NutritionController(
-        INutritionService nutritionService,
-        ILogger<NutritionController> logger)
+            FatSecretService fatSecretService,
+            ILogger<NutritionController> logger)
         {
-            _nutritionService = nutritionService;
+            _fatSecretService = fatSecretService;
             _logger = logger;
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchFoods([FromQuery] string query, [FromQuery] int limit = 10)
+        public async Task<IActionResult> SearchFoods(
+            [FromQuery] string query,
+            [FromQuery] int limit = 10,
+            CancellationToken ct = default)
         {
+            if (string.IsNullOrWhiteSpace(query))
+                return BadRequest("Query parameter is required");
+
             try
             {
-                var results = await _nutritionService.SearchFoodsAsync(query, limit);
-                return Ok(results);
+                var result = await _fatSecretService.SearchFoodsAsync(query, limit, ct);
+                return Content(result, "application/json");
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, "Error searching foods");
-                return StatusCode(500, new { error = "Ошибка при поиске продуктов" });
-            }
-        }
-
-        // ➕ Добавить запись в дневник
-        [HttpPost("diary")]
-        public async Task<IActionResult> AddToDiary([FromBody] AddToDiaryDto dto)
-        {
-            try
-            {
-                var clientId = GetCurrentClientId();
-                if (clientId == null)
-                    return Unauthorized(new { error = "Пользователь не аутентифицирован" });
-
-                var entry = await _nutritionService.AddToDiaryAsync(clientId.Value, dto);
-
-                return Ok(); ;
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { error = ex.Message });
+                return StatusCode(502, new { error = "Failed to fetch data from FatSecret" });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при добавлении записи в дневник");
-                return StatusCode(500, new { error = "Внутренняя ошибка сервера" });
+                _logger.LogError(ex, "Unexpected error");
+                return StatusCode(500, new { error = "Internal server error" });
             }
         }
 
-        // 📋 Получить историю питания
-        [HttpGet("diary/history")]
-        public async Task<IActionResult> GetDiaryHistory(
-            [FromQuery] DateOnly? from,
-            [FromQuery] DateOnly? to)
+        [HttpGet("food/{foodId}")]
+        public async Task<IActionResult> GetFoodDetails(
+            string foodId,
+            CancellationToken ct = default)
         {
             try
             {
-                var clientId = GetCurrentClientId();
-                if (clientId == null)
-                    return Unauthorized();
-
-                var entries = await _nutritionService.GetDiaryHistoryAsync(clientId.Value, from, to);
-
-                return Ok(new
-                {
-                    entries,
-                    totalEntries = entries.Count
-                });
+                var result = await _fatSecretService.GetFoodDetailsAsync(foodId, ct);
+                return Content(result, "application/json");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка при получении истории питания");
-                return StatusCode(500, new { error = "Внутренняя ошибка сервера" });
+                _logger.LogError(ex, "Error getting food details");
+                return StatusCode(500, new { error = "Failed to fetch food details" });
             }
         }
-
-        // 📊 Получить сводку по дням
-        [HttpGet("diary/summary")]
-        public async Task<IActionResult> GetDiarySummary(
-            [FromQuery] DateOnly? from,
-            [FromQuery] DateOnly? to)
-        {
-            try
-            {
-                var clientId = GetCurrentClientId();
-                if (clientId == null)
-                    return Unauthorized();
-
-                var summary = await _nutritionService.GetDiarySummaryAsync(clientId.Value, from, to);
-                return Ok(summary);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка при получении сводки");
-                return StatusCode(500, new { error = "Внутренняя ошибка сервера" });
-            }
-        }
-
-        // 🔹 Вспомогательный метод для получения ID клиента из токена
-        private int? GetCurrentClientId()
-        {
-            var claim = User.FindFirst("nameidentifier");
-            if (claim == null || !int.TryParse(claim.Value, out var clientId))
-                return null;
-            return clientId;
-        }
-        //[HttpGet("food/{foodId}")]
-        //public async Task<IActionResult> GetFood(long foodId)
-        //{
-        //    var food = await _fatSecretService.GetFoodByIdAsync(foodId);
-
-        //    if (food?.food == null)
-        //    {
-        //        return NotFound(new { message = "Food not found" });
-        //    }
-
-        //    return Ok(food);
-        //}
         
-
-        //[HttpGet("search")]
-        //public async Task<IActionResult> SearchFoods([FromQuery] string query, [FromQuery] int limit = 10)
-        //{
-        //    if (string.IsNullOrWhiteSpace(query))
-        //        return BadRequest(new { error = "Поисковый запрос не может быть пустым" });
-
-        //    try
-        //    {
-        //        var results = await _fatSecretService.SearchFoodsAsync(query, limit);
-        //        return Ok(results);
-        //    }
-        //    catch (HttpRequestException ex)
-        //    {
-        //        return StatusCode(502, new { error = "Ошибка при поиске в FatSecret API", details = ex.Message });
-        //    }
-        //}
 
 
 
