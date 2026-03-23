@@ -14,5 +14,6 @@ namespace WebHealthServer.Repositories
         public string Scope { get; set; } = "basic";
         public string TokenUrl { get; set; } = "https://oauth.fatsecret.com/connect/token";
         public string ApiBaseUrl { get; set; } = "https://platform.fatsecret.com/rest/server.api";
+        public string Locale { get; set; } = "ru_RU"; // По умолчанию русская локаль
     }
 }

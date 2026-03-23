@@ -116,7 +116,8 @@ namespace WebHealthServer.Services
                 ["method"] = "foods.search",
                 ["search_expression"] = query,
                 ["format"] = "json",
-                ["max_results"] = maxResults.ToString()
+                ["max_results"] = maxResults.ToString(),
+                ["locale"] = _options.Locale     // ← 🔥 ДОБАВЛЕНО: локаль
             };
 
             return await ExecuteApiRequestAsync(queryParams, token, ct);
@@ -133,7 +134,8 @@ namespace WebHealthServer.Services
             {
                 ["method"] = "food.get.v5",
                 ["food_id"] = foodId,
-                ["format"] = "json"
+                ["format"] = "json",
+                ["locale"] = _options.Locale
             };
 
             return await ExecuteApiRequestAsync(queryParams, token, ct);
