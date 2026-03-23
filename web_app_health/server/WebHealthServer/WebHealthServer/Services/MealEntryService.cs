@@ -1,4 +1,4 @@
-﻿using AutoMapper; // 🔥 Не забудь using!
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using WebHealthServer.Data;
@@ -164,5 +164,4 @@ public class MealEntryService : IMealEntryService
         return _mapper.Map<IEnumerable<MealEntryResponseDto>>(entries);
     }
 
-    // 🔥 Убираем ручной метод MapToResponseDto — теперь он не нужен!
 }
