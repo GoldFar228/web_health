@@ -1,0 +1,130 @@
+
+.searchable-food-input {
+  position: relative;
+}
+
+.food-search-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.food-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.search-loading {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px 15px;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  border: 2px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  z-index: 10;
+}
+
+.food-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #667eea;
+  border-radius: 0 0 8px 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.food-result-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.food-result-item:hover,
+.food-result-item.highlighted {
+  background: #f8f9ff;
+}
+
+.food-name {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.food-brand {
+  color: #7f8c8d;
+  font-weight: normal;
+}
+
+.food-nutrition-mini {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.food-source-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.food-source-badge.personal {
+  background: #e8f4fd;
+  color: #2980b9;
+}
+
+.food-source-badge.fatsecret {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.food-search-empty {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 0 0 8px 8px;
+  padding: 20px;
+  text-align: center;
+  z-index: 100;
+}
+
+.food-search-empty p {
+  margin: 0 0 15px 0;
+  color: #555;
+}
+
+.btn-create-personal {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.btn-create-personal:hover {
+  background: #5568d3;
+}

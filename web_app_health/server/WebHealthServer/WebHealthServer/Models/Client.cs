@@ -34,5 +34,7 @@ namespace WebHealthServer.Models
         // ✅ ВАЖНО: Добавьте связь с MealEntry
         [InverseProperty("Client")]
         public ICollection<MealEntry> MealEntries { get; set; } = new List<MealEntry>();
+        [InverseProperty("Client")]
+        public ICollection<PersonalFood> PersonalFoods { get; set; } = new List<PersonalFood>();
     }
 }

@@ -21,7 +21,7 @@ namespace WebHealthServer.Data
         public DbSet<TrainingProgram> TrainingPrograms { get; set; }
         public DbSet<TrainingProgramExercise> TrainingProgramExercises { get; set; }
         public DbSet<MealEntry> MealEntries { get; set; }
-        public DbSet<MealEntry> MealsEaten { get; set; }
+        public DbSet<PersonalFood> PersonalFoods { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ...
@@ -31,6 +31,12 @@ namespace WebHealthServer.Data
                 entity.HasIndex(e => e.ClientId);
                 entity.HasIndex(e => e.EntryDate);
             });
+            modelBuilder.Entity<PersonalFood>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasIndex(e => e.ClientId);
+            });
         }
+        
     }
 }
