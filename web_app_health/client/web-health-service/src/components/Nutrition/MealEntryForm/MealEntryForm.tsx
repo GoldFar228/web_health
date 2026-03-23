@@ -52,9 +52,18 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
     };
 
     const calculateNutritionForQuantity = useCallback((food: FoodSearchResult, quantity: number, unit: string) => {
-        const isGrams = unit === 'g';
-        const baseQuantity = isGrams ? quantity : 100;
-        const ratio = baseQuantity / 100;
+        const unitToGrams: Record<string, number> = {
+            'g': 1,
+            'ml': 1,      // 1мл ≈ 1г для воды/йогурта
+            'pcs': 100,   // 1 шт ≈ 100г (усреднённо)
+            'cup': 250,   // 1 стакан = 250г
+            'tbsp': 15,   // 1 ст. ложка = 15г
+            'tsp': 5      // 1 ч. ложка = 5г
+        };
+
+        const gramsPerUnit = unitToGrams[unit] ?? 100;
+        const totalGrams = quantity * gramsPerUnit;
+        const ratio = totalGrams / 100;
 
         return {
             calories: Math.round(food.caloriesPer100g * ratio),
@@ -87,16 +96,15 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
     }, [calculateNutritionForQuantity, isNutritionManual]); // ← добавь
 
     const handleQuantityChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         const newValue = value === '' ? undefined : parseFloat(value);
 
         setFormData(prev => {
-            const updated = { ...prev, [name]: newValue };
+            const updated = { ...prev, quantity: newValue };
 
-            if (selectedFood && (name === 'quantity' || name === 'unit')) {
-                const quantity = name === 'quantity' ? (newValue ?? 100) : prev.quantity;
-                const unit = name === 'unit' ? (value as string) : prev.unit;
-                const nutrition = calculateNutritionForQuantity(selectedFood, quantity, unit);
+            if (selectedFood) {
+                const quantity = newValue ?? 100;
+                const nutrition = calculateNutritionForQuantity(selectedFood, quantity, prev.unit);
 
                 return {
                     ...updated,
@@ -110,7 +118,27 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
             return updated;
         });
     }, [selectedFood, calculateNutritionForQuantity]);
+    const handleUnitChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = e.target;
 
+        setFormData(prev => {
+            const updated = { ...prev, unit: value };
+
+            if (selectedFood) {
+                const nutrition = calculateNutritionForQuantity(selectedFood, prev.quantity, value);
+
+                return {
+                    ...updated,
+                    calories: nutrition.calories,
+                    protein: nutrition.protein,
+                    carbohydrates: nutrition.carbohydrates,
+                    fat: nutrition.fat
+                };
+            }
+
+            return updated;
+        });
+    }, [selectedFood, calculateNutritionForQuantity]);
     const handleNutritionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const newValue = value === '' ? undefined : parseFloat(value);
@@ -240,20 +268,21 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
                         id="quantity"
                         name="quantity"
                         value={formData.quantity}
-                        onChange={handleQuantityChange}
+                        onChange={handleQuantityChange}  // ✅
                         min="0.1"
                         step="0.1"
                         required
                     />
                 </div>
 
+                {/* Единица — select, обработчик handleUnitChange */}
                 <div className="form-group">
                     <label htmlFor="unit">Единица</label>
                     <select
                         id="unit"
                         name="unit"
                         value={formData.unit}
-                        onChange={handleQuantityChange}
+                        onChange={handleUnitChange}
                     >
                         <option value="g">грамм (г)</option>
                         <option value="ml">миллилитр (мл)</option>
