@@ -18,6 +18,8 @@ namespace WebHealthServer.Models
         public decimal Quantity { get; set; }
         public string Unit { get; set; } = "g"; 
         public string? FatSecretFoodId { get; set; } // 🔗 Опционально: если берём из API
+        [MaxLength(50)]
+        public string? FatSecretServingId { get; set; }
         public decimal? Calories { get; set; }
         public decimal? Protein { get; set; }
         public decimal? Carbohydrates { get; set; }

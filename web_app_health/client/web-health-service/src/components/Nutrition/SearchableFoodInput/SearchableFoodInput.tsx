@@ -260,3 +260,4 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
         </div>
     );
 };
+export type {FoodSearchResult}

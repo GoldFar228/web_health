@@ -21,5 +21,7 @@ namespace WebHealthServer.Models
         public decimal Fat { get; set; }
         public string? Notes { get; set; }
         public DateTime CreatedAt { get; set; }
+        [MaxLength(50)]
+        public string? FatSecretServingId { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebHealthServer.Models.Enums;
 
-namespace WebHealthServer.Models
+namespace WebHealthServer.DTOs
 {
-    public class CreatePersonalFoodDto : AbstractEntity
+    public class CreatePersonalFoodDto
     {
         [Required, MaxLength(200)]
         public string Name { get; set; } = string.Empty;
@@ -12,19 +10,26 @@ namespace WebHealthServer.Models
         [MaxLength(100)]
         public string? Brand { get; set; }
 
-        [Range(0, 10000)]
-        public decimal CaloriesPer100g { get; set; }
+        // 🔥 КБЖУ на порцию
+        [Required]
+        public int CaloriesPerServing { get; set; }
 
-        [Range(0, 1000)]
-        public decimal ProteinPer100g { get; set; }
+        [Required]
+        public decimal ProteinPerServing { get; set; }
 
-        [Range(0, 1000)]
-        public decimal CarbsPer100g { get; set; }
+        [Required]
+        public decimal CarbsPerServing { get; set; }
 
-        [Range(0, 1000)]
-        public decimal FatPer100g { get; set; }
+        [Required]
+        public decimal FatPerServing { get; set; }
 
-        [MaxLength(50)]
+        // 🔥 Размер порции
+        [Required]
+        public decimal ServingSize { get; set; } = 100;
+
         public string DefaultUnit { get; set; } = "g";
+
+        // Авто-расчёт калорий из макросов
+        public bool AutoCalculateCalories { get; set; } = false;
     }
 }

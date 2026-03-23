@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using WebHealthServer.DTOs;
 using WebHealthServer.Models;
 using WebHealthServer.Repositories;
 

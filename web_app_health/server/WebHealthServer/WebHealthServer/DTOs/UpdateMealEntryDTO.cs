@@ -34,5 +34,7 @@ namespace WebHealthServer.Models
 
         [MaxLength(500)]
         public string? Notes { get; set; }
+        [MaxLength(50)]
+        public string? FatSecretServingId { get; set; }
     }
 }

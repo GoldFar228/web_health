@@ -1,0 +1,89 @@
+/* src/components/Nutrition/ServingSelector/ServingSelector.css */
+
+.serving-selector {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.serving-selector__label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
+}
+
+.serving-selector__group {
+  margin-bottom: 1rem;
+}
+
+.serving-selector__group:last-child {
+  margin-bottom: 0;
+}
+
+.serving-selector__group-title {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.serving-selector__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.serving-selector__option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.serving-selector__option:hover {
+  border-color: #3498db;
+  background: #f0f7ff;
+}
+
+.serving-selector__option--selected {
+  border-color: #27ae60;
+  background: #e8f8f0;
+  box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.2);
+}
+
+.serving-selector__description {
+  font-weight: 500;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.serving-selector__nutrition {
+  font-size: 0.8rem;
+  color: #6c757d;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+@media (max-width: 600px) {
+  .serving-selector__option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .serving-selector__nutrition {
+    margin-left: 0;
+  }
+}

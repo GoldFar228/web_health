@@ -128,7 +128,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IMealEntryService, MealEntryService>();
 builder.Services.AddScoped<FatSecretService>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(FatSecretOptions<>));
-//builder.Services.AddScoped<IPersonalFoodService, PersonalFoodService>();
+builder.Services.AddScoped<IPersonalFoodService, PersonalFoodService>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<ClientService>();
 builder.Services.AddScoped<CoachRepository>();
