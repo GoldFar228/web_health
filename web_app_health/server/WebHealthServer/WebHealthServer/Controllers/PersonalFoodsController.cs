@@ -59,10 +59,11 @@ namespace WebHealthServer.Controllers
                 PersonalFoodId = f.Id,
                 Name = f.Name,
                 Brand = f.Brand,
-                CaloriesPer100g = f.CaloriesPer100g,
-                ProteinPer100g = f.ProteinPer100g,
-                CarbsPer100g = f.CarbsPer100g,
-                FatPer100g = f.FatPer100g,
+                CaloriesPerServing = f.CaloriesPerServing,
+                ProteinPerServing = f.ProteinPerServing,
+                CarbsPerServing = f.CarbsPerServing,
+                FatPerServing = f.FatPerServing,
+                ServingSize = f.ServingSize,
                 DefaultUnit = f.DefaultUnit
             }));
 
