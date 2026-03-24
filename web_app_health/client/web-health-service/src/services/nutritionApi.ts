@@ -1,4 +1,6 @@
 // src/services/nutritionApi.ts
+import axios from "axios";
+import type { CreatePersonalFoodDto, PersonalFood } from "../types/personalFood";
 
 export interface FatSecretFoodItem {
   food_id: string;
@@ -59,10 +61,18 @@ export interface FoodSearchResult {
   servingInfo?: string;
   isDetailsLoaded?: boolean;
   servings?: FatSecretServing[];
+  // 🔥 Поля для точного КБЖУ на порцию (для личных продуктов)
+  caloriesPerServing?: number;
+  proteinPerServing?: number;
+  carbsPerServing?: number;
+  fatPerServing?: number;
+  servingSize?: number;
+  servingUnit?: string;
 }
 
 const NUTRITION_API_BASE = '/api/Nutrition/SearchFoods';
 const MEAL_API_BASE = '/api/MealEntries';
+const PERSONAL_FOODS_API_BASE = '/api/PersonalFoods'; // 🔥 Новый базовый путь
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
@@ -90,7 +100,6 @@ export const searchFatSecretFoods = async (
   return data?.foods?.food || [];
 };
 
-// 🔥 ОБНОВЛЁННЫЙ МЕТОД: возвращает все порции продукта
 export const getFatSecretFoodDetails = async (
   foodId: string
 ): Promise<FoodSearchResult> => {
@@ -131,7 +140,6 @@ export const getFatSecretFoodDetails = async (
     return isNaN(num) ? 0 : num;
   };
 
-  // Ищем порцию на 100г для базового расчёта
   const serving100g = servings.find(s =>
     s.metric_serving_unit === 'g' && Math.abs(parseNum(s.metric_serving_amount) - 100) < 0.01
   ) || servings.find(s => s.metric_serving_unit === 'g') || servings[0];
@@ -155,51 +163,87 @@ export const getFatSecretFoodDetails = async (
     defaultUnit: (serving100g.metric_serving_unit as 'g' | 'ml' | 'pcs') || 'g',
     servingInfo: serving100g.serving_description,
     isDetailsLoaded: true,
-    servings: servings // 🔥 Возвращаем все порции
+    servings: servings
   };
 };
 
+// 🔥 ОБНОВЛЁННЫЙ МЕТОД: ищет в настоящей базе личных продуктов
 export const searchPersonalFoodHistory = async (
   query: string
 ): Promise<FoodSearchResult[]> => {
-  const today = new Date().toISOString().split('T')[0];
-  const response = await fetch(
-    `${MEAL_API_BASE}?date=${today}`,
-    { headers: getAuthHeaders() }
-  );
+  try {
+    const response = await fetch(
+      `${PERSONAL_FOODS_API_BASE}/search?query=${encodeURIComponent(query.trim())}`,
+      { headers: getAuthHeaders() }
+    );
 
-  if (!response.ok) return [];
+    if (!response.ok) {
+      console.warn('⚠️ Failed to fetch personal foods from backend');
+      return [];
+    }
 
-  const entries: any[] = await response.json();
+    const personalFoods: PersonalFood[] = await response.json();
 
-  const filtered = entries
-    .filter(e => e.foodName?.toLowerCase().includes(query.toLowerCase()))
-    .reduce((acc, curr) => {
-      const exists = acc.find((item: any) => item.foodName === curr.foodName);
-      if (!exists) acc.push(curr);
-      return acc;
-    }, [])
-    .slice(0, 5)
-    .map((entry: any) => {
-      const quantity = entry.quantity || 100;
-      const ratio = quantity > 0 ? 100 / quantity : 1;
+    // 🔥 Маппим в FoodSearchResult
+    return personalFoods.map(mapPersonalToFoodResult);
+  } catch (err) {
+    console.error('❌ Error searching personal foods:', err);
+    return [];
+  }
+};
 
-      return {
-        source: 'personal' as const,
-        personalFoodId: entry.id,
-        name: entry.foodName,
-        brand: entry.brand,
-        caloriesPer100g: Math.round((entry.calories || 0) * ratio),
-        proteinPer100g: parseFloat(((entry.protein || 0) * ratio).toFixed(1)),
-        carbsPer100g: parseFloat(((entry.carbohydrates || entry.carbs || 0) * ratio).toFixed(1)),
-        fatPer100g: parseFloat(((entry.fat || 0) * ratio).toFixed(1)),
-        defaultUnit: 'g' as const,
-        isDetailsLoaded: true,
-        servings: []
-      };
-    });
+// 🔥 НОВАЯ ФУНКЦИЯ: маппинг PersonalFood → FoodSearchResult
+export const mapPersonalToFoodResult = (food: any): FoodSearchResult => {
+  // 🔥 Пытаемся получить per-serving данные (как должно быть)
+  const servingSize = food.servingSize ?? food.servingSizeGrams ?? null;
+  const caloriesPerServing = food.caloriesPerServing ?? food.calories ?? null;
+  const proteinPerServing = food.proteinPerServing ?? food.protein ?? null;
+  const carbsPerServing = food.carbsPerServing ?? food.carbs ?? food.carbohydrate ?? null;
+  const fatPerServing = food.fatPerServing ?? food.fat ?? null;
 
-  return filtered;
+  // 🔥 Если per-serving есть — считаем per-100g
+  // Если нет — берём готовые per-100g (как временное решение)
+  let caloriesPer100g = food.caloriesPer100g ?? 0;
+  let proteinPer100g = food.proteinPer100g ?? 0;
+  let carbsPer100g = food.carbsPer100g ?? 0;
+  let fatPer100g = food.fatPer100g ?? 0;
+
+  if (servingSize && servingSize > 0 && caloriesPerServing != null) {
+    caloriesPer100g = Math.round((caloriesPerServing / servingSize) * 100);
+    proteinPer100g = parseFloat(((proteinPerServing ?? 0) / servingSize * 100).toFixed(1));
+    carbsPer100g = parseFloat(((carbsPerServing ?? 0) / servingSize * 100).toFixed(1));
+    fatPer100g = parseFloat(((fatPerServing ?? 0) / servingSize * 100).toFixed(1));
+  }
+
+  const defaultUnit = ['g', 'ml', 'pcs'].includes(food.defaultUnit)
+    ? food.defaultUnit
+    : 'g';
+
+  return {
+    source: 'personal',
+    personalFoodId: food.id,
+    name: food.name,
+    brand: food.brand || undefined,
+
+    // КБЖУ на 100г (для отображения)
+    caloriesPer100g,
+    proteinPer100g,
+    carbsPer100g,
+    fatPer100g,
+
+    // 🔥 Per-serving данные (могут быть null, если бэкенд не отдаёт)
+    caloriesPerServing,
+    proteinPerServing,
+    carbsPerServing,
+    fatPerServing,
+    servingSize,
+    servingUnit: food.defaultUnit,
+
+    defaultUnit: defaultUnit as 'g' | 'ml' | 'pcs',
+    servingInfo: servingSize ? `${servingSize} ${defaultUnit}` : '100 г',
+    isDetailsLoaded: true,
+    servings: []
+  };
 };
 
 export const mapFatSecretToFoodResult = (item: FatSecretFoodItem): FoodSearchResult => {
@@ -217,4 +261,47 @@ export const mapFatSecretToFoodResult = (item: FatSecretFoodItem): FoodSearchRes
     isDetailsLoaded: false,
     servings: []
   };
+};
+
+// 🔥 Создание личного продукта (axios, так как нужен POST с телом)
+export const createPersonalFood = async (data: CreatePersonalFoodDto): Promise<PersonalFood> => {
+  const token = localStorage.getItem('token') || localStorage.getItem('jwt') || localStorage.getItem('authToken');
+
+  const response = await axios.post<PersonalFood>(
+    PERSONAL_FOODS_API_BASE,
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
+      },
+    }
+  );
+  return response.data;
+};
+
+// 🔥 Получение всех личных продуктов (для управления в настройках)
+export const getAllPersonalFoods = async (): Promise<PersonalFood[]> => {
+  const response = await fetch(
+    PERSONAL_FOODS_API_BASE,
+    { headers: getAuthHeaders() }
+  );
+
+  if (!response.ok) return [];
+  return await response.json();
+};
+
+// 🔥 Удаление личного продукта
+export const deletePersonalFood = async (id: number): Promise<void> => {
+  const response = await fetch(
+    `${PERSONAL_FOODS_API_BASE}/${id}`,
+    {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to delete personal food');
+  }
 };

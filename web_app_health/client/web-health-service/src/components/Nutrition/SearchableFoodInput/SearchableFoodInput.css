@@ -1,4 +1,61 @@
 /* src/components/Nutrition/SearchableFoodInput/SearchableFoodInput.css */
+/* Кнопка "Добавить новый продукт" в списке */
+.add-new-food-btn {
+    background: linear-gradient(135deg, #e8f4fd 0%, #f0f7ff 100%);
+    border: 2px dashed #4a90e2;
+    border-radius: 8px;
+    margin: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-new-food-btn:hover {
+    background: linear-gradient(135deg, #d0e8fc 0%, #e0f0ff 100%);
+    border-color: #3a7bc8;
+    transform: translateY(-1px);
+}
+
+.add-new-food-btn .food-result-main strong {
+    color: #1a73e8;
+    font-weight: 600;
+}
+
+/* Разделитель в списке результатов */
+.search-results-divider {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #eee;
+    margin: 0.25rem 0;
+}
+
+.search-results-divider span {
+    display: inline-block;
+    background: #fff;
+    padding: 0 0.5rem;
+}
+
+/* Обычные результаты */
+.food-result-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.15s;
+}
+
+.food-result-item:hover,
+.food-result-item.highlighted {
+    background: #f8f9fa;
+}
+
+.food-result-item:last-child {
+    border-bottom: none;
+}
+
+
+
 .searchable-food-input__wrapper {
   position: relative;
   width: 100%;
