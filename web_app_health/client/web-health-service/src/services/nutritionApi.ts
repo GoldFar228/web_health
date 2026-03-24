@@ -191,58 +191,54 @@ export const searchPersonalFoodHistory = async (
     return [];
   }
 };
+export const mapPersonalToFoodResult = (food: {
+  personalFoodId?: number;
+  id?: number;
+  name: string;
+  brand?: string;
+  caloriesPerServing?: number;
+  proteinPerServing?: number;
+  carbsPerServing?: number;
+  fatPerServing?: number;
+  servingSize?: number;
+  defaultUnit?: string;
+  caloriesPer100g?: number;
+  proteinPer100g?: number;
+  carbsPer100g?: number;
+  fatPer100g?: number;
+}): FoodSearchResult => {
+  const servingSize = (food.servingSize && food.servingSize > 0)
+    ? food.servingSize
+    : 100;
+  const ratio = 100 / servingSize;
 
-// 🔥 НОВАЯ ФУНКЦИЯ: маппинг PersonalFood → FoodSearchResult
-export const mapPersonalToFoodResult = (food: any): FoodSearchResult => {
-  // 🔥 Пытаемся получить per-serving данные (как должно быть)
-  const servingSize = food.servingSize ?? food.servingSizeGrams ?? null;
-  const caloriesPerServing = food.caloriesPerServing ?? food.calories ?? null;
-  const proteinPerServing = food.proteinPerServing ?? food.protein ?? null;
-  const carbsPerServing = food.carbsPerServing ?? food.carbs ?? food.carbohydrate ?? null;
-  const fatPerServing = food.fatPerServing ?? food.fat ?? null;
-
-  // 🔥 Если per-serving есть — считаем per-100g
-  // Если нет — берём готовые per-100g (как временное решение)
-  let caloriesPer100g = food.caloriesPer100g ?? 0;
-  let proteinPer100g = food.proteinPer100g ?? 0;
-  let carbsPer100g = food.carbsPer100g ?? 0;
-  let fatPer100g = food.fatPer100g ?? 0;
-
-  if (servingSize && servingSize > 0 && caloriesPerServing != null) {
-    caloriesPer100g = Math.round((caloriesPerServing / servingSize) * 100);
-    proteinPer100g = parseFloat(((proteinPerServing ?? 0) / servingSize * 100).toFixed(1));
-    carbsPer100g = parseFloat(((carbsPerServing ?? 0) / servingSize * 100).toFixed(1));
-    fatPer100g = parseFloat(((fatPerServing ?? 0) / servingSize * 100).toFixed(1));
-  }
-
-  const defaultUnit = ['g', 'ml', 'pcs'].includes(food.defaultUnit)
-    ? food.defaultUnit
-    : 'g';
+  // Если есть данные на 100г — используем их, иначе конвертируем из perServing
+  const caloriesPer100g = food.caloriesPer100g ??
+    (food.caloriesPerServing != null ? Math.round(food.caloriesPerServing * ratio) : 0);
+  const proteinPer100g = food.proteinPer100g ??
+    (food.proteinPerServing != null ? parseFloat((food.proteinPerServing * ratio).toFixed(1)) : 0);
+  const carbsPer100g = food.carbsPer100g ??
+    (food.carbsPerServing != null ? parseFloat((food.carbsPerServing * ratio).toFixed(1)) : 0);
+  const fatPer100g = food.fatPer100g ??
+    (food.fatPerServing != null ? parseFloat((food.fatPerServing * ratio).toFixed(1)) : 0);
 
   return {
     source: 'personal',
-    personalFoodId: food.id,
+    personalFoodId: food.personalFoodId ?? food.id,
     name: food.name,
-    brand: food.brand || undefined,
-
-    // КБЖУ на 100г (для отображения)
+    brand: food.brand,
+    caloriesPerServing: food.caloriesPerServing,
+    proteinPerServing: food.proteinPerServing,
+    carbsPerServing: food.carbsPerServing,
+    fatPerServing: food.fatPerServing,
     caloriesPer100g,
     proteinPer100g,
     carbsPer100g,
     fatPer100g,
-
-    // 🔥 Per-serving данные (могут быть null, если бэкенд не отдаёт)
-    caloriesPerServing,
-    proteinPerServing,
-    carbsPerServing,
-    fatPerServing,
+    defaultUnit: (food.defaultUnit as 'g' | 'ml' | 'pcs') ?? 'g',
     servingSize,
-    servingUnit: food.defaultUnit,
-
-    defaultUnit: defaultUnit as 'g' | 'ml' | 'pcs',
-    servingInfo: servingSize ? `${servingSize} ${defaultUnit}` : '100 г',
-    isDetailsLoaded: true,
-    servings: []
+    servingInfo: servingSize > 0 ? `${servingSize} ${food.defaultUnit ?? 'г'}` : undefined,
+    isDetailsLoaded: true
   };
 };
 

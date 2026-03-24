@@ -43,6 +43,7 @@ namespace WebHealthServer.Services
                 ProteinPerServing = f.ProteinPerServing,
                 CarbsPerServing = f.CarbsPerServing,
                 FatPerServing = f.FatPerServing,
+                ServingSize = f.ServingSize,
                 DefaultUnit = f.DefaultUnit
             });
         }
@@ -64,6 +65,7 @@ namespace WebHealthServer.Services
                 ProteinPerServing = dto.ProteinPerServing,
                 CarbsPerServing = dto.CarbsPerServing,
                 FatPerServing = dto.FatPerServing,
+                ServingSize = dto.ServingSize,
                 DefaultUnit = dto.DefaultUnit,
                 CreatedAt = DateTime.UtcNow,
                 UsedAt = DateTime.UtcNow
@@ -81,6 +83,7 @@ namespace WebHealthServer.Services
                 ProteinPerServing = food.ProteinPerServing,
                 CarbsPerServing = food.CarbsPerServing,
                 FatPerServing = food.FatPerServing,
+                ServingSize = food.ServingSize,
                 DefaultUnit = food.DefaultUnit
             };
         }
@@ -105,6 +108,7 @@ namespace WebHealthServer.Services
                 ProteinPerServing = food.ProteinPerServing,
                 CarbsPerServing = food.CarbsPerServing,
                 FatPerServing = food.FatPerServing,
+                ServingSize = food.ServingSize,
                 DefaultUnit = food.DefaultUnit
             };
         }

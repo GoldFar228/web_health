@@ -111,24 +111,45 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
   }, []);
 
   // 🔥 Обработчик выбора продукта
-  const handleFoodSelect = useCallback((food: FoodSearchResult) => {
-    setSelectedFood(food);
-    setSelectedServing(null);
+ const handleFoodSelect = useCallback((food: FoodSearchResult) => {
+  setSelectedFood(food);
+  setSelectedServing(null);
 
+  if (food.source === 'personal') {
+    // 🔥 ФИКС: servingSize = 0 заменяем на 100
+    const servingSize = (food.servingSize && food.servingSize > 0) 
+      ? food.servingSize 
+      : 100;
+    
+    // 🔥 ФИКС: используем PerServing данные напрямую
     setFormData(prev => ({
       ...prev,
       foodName: food.name,
       brand: food.brand || '',
-      fatSecretFoodId: food.source === 'fatsecret' ? food.fatSecretFoodId : undefined,
+      fatSecretFoodId: undefined,
       fatSecretServingId: undefined,
-      // Сбрасываем КБЖУ - будут загружены с деталями продукта
+      unit: food.defaultUnit,
+      quantity: servingSize,
+      calories: food.caloriesPerServing ?? undefined,
+      protein: food.proteinPerServing ?? undefined,
+      carbohydrates: food.carbsPerServing ?? undefined,
+      fat: food.fatPerServing ?? undefined
+    }));
+  } else {
+    // Для FatSecret сбрасываем КБЖУ (загрузятся в useEffect)
+    setFormData(prev => ({
+      ...prev,
+      foodName: food.name,
+      brand: food.brand || '',
+      fatSecretFoodId: food.fatSecretFoodId,
+      fatSecretServingId: undefined,
       calories: undefined,
       protein: undefined,
       carbohydrates: undefined,
       fat: undefined
     }));
-  }, []);
-
+  }
+}, []);
   // 🔥 Пересчёт при изменении количества
   const handleQuantityChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

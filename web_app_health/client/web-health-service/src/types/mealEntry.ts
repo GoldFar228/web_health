@@ -78,6 +78,7 @@ export interface FoodSearchResult {
   personalFoodId?: number;
   name: string;
   brand?: string;
+  servingSize?: number; 
   caloriesPer100g: number;
   proteinPer100g: number;
   carbsPer100g: number;

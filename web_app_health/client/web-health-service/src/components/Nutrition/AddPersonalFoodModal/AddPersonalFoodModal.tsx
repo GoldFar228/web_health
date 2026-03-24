@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { createPersonalFood } from '../../../services/nutritionApi';
-import { COMMON_UNITS, type PersonalFood, type CreatePersonalFoodDto} from '../../../types/personalFood';
+import { COMMON_UNITS, type PersonalFood, type CreatePersonalFoodDto } from '../../../types/personalFood';
 import './AddPersonalFoodModal.css';
 
 interface AddPersonalFoodModalProps {
@@ -86,9 +86,10 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    e.stopPropagation();
+
     console.log('📤 Отправка формы:', formData);
-    
+
     if (!formData.name.trim()) {
       setError('Название продукта обязательно');
       return;
@@ -109,14 +110,18 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
       console.log('🚀 Payload:', payload);
 
       const created = await createPersonalFood(payload);
-      
+
       console.log('✅ Создано:', created);
-      
+
+      // 🔥 ФИКС: просто передаём созданный продукт, без создания meal entry
       onSuccess(created);
+
+      // 🔥 ФИКС: закрываем модалку и возвращаемся на форму
       onClose();
+
     } catch (err: any) {
       console.error('❌ Ошибка создания продукта:', err);
-      
+
       if (err.response) {
         console.error('Status:', err.response.status);
         console.error('Data:', err.response.data);
@@ -135,20 +140,26 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
 
   const modalContent = (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="add-food-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="add-food-modal"
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={(e) => e.preventDefault()}>
         <div className="modal-header">
           <h3>➕ Добавить продукт в мою базу</h3>
-          <button 
-            type="button" 
-            className="modal-close" 
-            onClick={onClose} 
+          <button
+            type="button"
+            className="modal-close"
+            onClick={onClose}
             aria-label="Закрыть"
           >
             &times;
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="modal-form" noValidate>
+        <form
+          onSubmit={handleSubmit}
+          onReset={(e) => e.preventDefault()}
+          className="modal-form"
+          noValidate>
           {error && <div className="form-error">⚠️ {error}</div>}
 
           <div className="form-group">
@@ -206,7 +217,7 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
           </div>
 
           <p className="form-hint">
-            💡 Введите КБЖУ <strong>на указанную порцию</strong>. 
+            💡 Введите КБЖУ <strong>на указанную порцию</strong>.
             Например: батончик 40г → укажите КБЖУ именно на 40г.
           </p>
 
@@ -270,7 +281,7 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
               onChange={(e) => handleChange('autoCalculateCalories', e.target.checked)}
             />
             <span>
-              Автоматически рассчитать калории из Б/У/Ж 
+              Автоматически рассчитать калории из Б/У/Ж
               <small>(4 ккал/г белки и углеводы, 9 ккал/г жиры)</small>
             </span>
           </label>
@@ -282,17 +293,17 @@ export const AddPersonalFoodModal: React.FC<AddPersonalFoodModalProps> = ({
           )}
 
           <div className="modal-actions">
-            <button 
-              type="button" 
-              className="btn-secondary" 
-              onClick={onClose} 
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={onClose}
               disabled={isSubmitting}
             >
               Отмена
             </button>
-            <button 
-              type="submit" 
-              className="btn-primary" 
+            <button
+              type="submit"
+              className="btn-primary"
               disabled={isSubmitting}
             >
               {isSubmitting ? '💾 Сохранение...' : '💾 Сохранить продукт'}

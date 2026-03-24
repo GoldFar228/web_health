@@ -21,6 +21,10 @@ export interface PersonalFood {
   proteinPerServing: number;
   carbsPerServing: number;
   fatPerServing: number;
+  caloriesPer100g?: number;  // 🔥 ДОБАВИТЬ
+  proteinPer100g?: number;   // 🔥 ДОБАВИТЬ
+  carbsPer100g?: number;     // 🔥 ДОБАВИТЬ
+  fatPer100g?: number;       // 🔥 ДОБАВИТЬ
   servingSize: number;
   defaultUnit: string;
   autoCalculateCalories: boolean;

@@ -34,7 +34,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const [error, setError] = useState<string | null>(null);
-    
+
     // Состояние для модального окна
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [pendingFoodName, setPendingFoodName] = useState('');
@@ -44,7 +44,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
     const dropdownRef = useRef<HTMLDivElement>(null);
     const debounceRef = useRef<NodeJS.Timeout>();
     const selectedResultRef = useRef<FoodSearchResult | null>(null);
-    
+
     // Кэш для оптимистичного поиска
     const personalFoodCacheRef = useRef<Map<number, FoodSearchResult>>(new Map());
 
@@ -56,7 +56,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
 
     const searchInPersonalCache = useCallback((searchQuery: string): FoodSearchResult[] => {
         const lowerQuery = searchQuery.toLowerCase();
-        return Array.from(personalFoodCacheRef.current.values()).filter(food => 
+        return Array.from(personalFoodCacheRef.current.values()).filter(food =>
             food.name.toLowerCase().includes(lowerQuery) ||
             (food.brand?.toLowerCase().includes(lowerQuery))
         );
@@ -83,7 +83,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
             } catch (err) {
                 console.warn('⚠️ Не удалось загрузить личные продукты:', err);
             }
-            
+
             // Добавляем из кэша
             const cachedResults = searchInPersonalCache(searchQuery);
             const cachedIds = new Set(cachedResults.map(r => r.personalFoodId));
@@ -99,13 +99,13 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
                     !mappedResults.some(m => m.name.toLowerCase() === p.name.toLowerCase())
                 )
             ];
-            
+
             setResults(combined.slice(0, 15));
             setIsOpen(true);
         } catch (err) {
             console.error('Search error:', err);
             setError('Не удалось загрузить результаты');
-            
+
             const cachedResults = searchInPersonalCache(searchQuery);
             if (cachedResults.length > 0) {
                 setResults(cachedResults);
@@ -155,7 +155,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
             handleCreatePersonal(query.trim());
             return;
         }
-        
+
         if (!isOpen || results.length === 0) return;
 
         switch (e.key) {
@@ -194,7 +194,7 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
     const handleSelect = async (food: FoodSearchResult) => {
         // 🔥 ВАЖНО: устанавливаем ссылку ДО того, как может сработать onBlur
         selectedResultRef.current = food;
-        
+
         if (food.source === 'fatsecret' && !food.isDetailsLoaded && food.fatSecretFoodId) {
             setIsLoadingDetails(true);
             try {
@@ -228,18 +228,18 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
     // 🔥 Обработка успешного создания
     const handlePersonalFoodCreated = useCallback((createdFood: PersonalFood) => {
         const newFood: FoodSearchResult = mapPersonalToFoodResult(createdFood);
-        
+
         // Добавляем в кэш
         addToPersonalCache(newFood);
-        
-        // Передаём в родительский компонент
-        onSelect(newFood);
-        setQuery(createdFood.name);
-        
-        // Сброс
+
+        setIsAddModalOpen(false);
         setPendingFoodName('');
         setPendingBrand(undefined);
-    }, [onSelect, addToPersonalCache]);
+
+        // Сброс
+        // setPendingFoodName('');
+        // setPendingBrand(undefined);
+    }, [addToPersonalCache]);
 
     return (
         <div className="searchable-food-input__wrapper" ref={dropdownRef}>
@@ -289,12 +289,12 @@ export const SearchableFoodInput: React.FC<SearchableFoodInputProps> = ({
                         </div>
                         <div className="food-source-badge">📚 Личный продукт</div>
                     </li>
-                    
+
                     {/* Разделитель */}
                     <li className="search-results-divider">
                         <span>Найдено в базах:</span>
                     </li>
-                    
+
                     {/* Результаты поиска */}
                     {results.map((food, index) => (
                         <li
