@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using WebHealthServer.Data;
 using WebHealthServer.Hubs;
 using WebHealthServer.Middleware;
 using WebHealthServer.Repositories;
 using WebHealthServer.Services;
+using static WebHealthServer.Services.WgerService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,8 +123,23 @@ builder.Services.AddHttpClient<FatSecretService>(client =>
 {
     client.BaseAddress = new Uri("https://platform.fatsecret.com");
     client.DefaultRequestHeaders.Accept.Add(
-        new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        new MediaTypeWithQualityHeaderValue("application/json"));
 });
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
+builder.Services.Configure<WgerOptions>(
+    builder.Configuration.GetSection(WgerOptions.SectionName));
+builder.Services.Configure<WgerOptions>(
+    builder.Configuration.GetSection(WgerOptions.SectionName));
+
+builder.Services.AddHttpClient<IWgerService, WgerService>();
+builder.Services.AddScoped<IWgerService, WgerService>();
+
+builder.Services.AddScoped<WgerService>();
 // HttpClient для внешних запросов
 builder.Services.AddHttpClient();
 //Добавление репозиториев
