@@ -22,6 +22,41 @@ const getAuthHeaders = () => {
 };
 
 export const workoutApi = {
+  // 🔍 Поиск упражнений в Wger API
+  searchExercises: async (
+    term?: string,
+    category?: number,
+    limit: number = 20
+  ): Promise<WgerExercise[]> => {
+    const params = new URLSearchParams();
+    if (term) params.append('term', term);
+    if (category) params.append('category', category.toString());
+    params.append('limit', limit.toString());
+
+    const response = await axios.get(
+      `${API_BASE_URL}/Wger/exercises?${params.toString()}`
+    );
+    return response.data.results || [];
+  },
+
+  // 💾 Сохранить упражнение в локальную БД
+  saveExerciseToDb: async (wgerExerciseId: number): Promise<Exercise> => {
+    const response = await axios.post(
+      `${API_BASE_URL}/Wger/exercises/${wgerExerciseId}/save-to-db`,
+      null,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // 📋 Получить все локальные упражнения
+  getLocalExercises: async (): Promise<Exercise[]> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/Wger/exercises/local`,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
   // 📋 Получить все тренировки клиента
   getAllSessions: async (): Promise<WorkoutSession[]> => {
     const response = await axios.get(
@@ -66,42 +101,6 @@ export const workoutApi = {
       `${API_BASE_URL}/WorkoutSession/Delete/${id}`,
       getAuthHeaders()
     );
-  },
-
-  // 🏋️ Получить локальные упражнения (из БД)
-  getLocalExercises: async (): Promise<Exercise[]> => {
-    const response = await axios.get(
-      `${API_BASE_URL}/Wger/exercises/local`,
-      getAuthHeaders()
-    );
-    return response.data;
-  },
-
-  // 🔍 Поиск упражнений в Wger API
-  searchExercises: async (
-    term?: string,
-    category?: number,
-    limit: number = 10
-  ): Promise<WgerExercise[]> => {
-    const params = new URLSearchParams();
-    if (term) params.append('term', term);
-    if (category) params.append('category', category.toString());
-    params.append('limit', limit.toString());
-
-    const response = await axios.get(
-      `${API_BASE_URL}/Wger/exercises?${params.toString()}`
-    );
-    return response.data.results || [];
-  },
-
-  // 💾 Сохранить упражнение в локальную БД
-  saveExerciseToDb: async (wgerExerciseId: number): Promise<Exercise> => {
-    const response = await axios.post(
-      `${API_BASE_URL}/Wger/exercises/${wgerExerciseId}/save-to-db`,
-      null,
-      getAuthHeaders()
-    );
-    return response.data;
   },
 
   // 📦 Массовое сохранение упражнений

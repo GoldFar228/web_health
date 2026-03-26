@@ -126,7 +126,11 @@ const workoutSlice = createSlice({
     },
     clearError: (state) => {
       state.error = null;
-    }
+    },
+
+    clearCurrentSession: (state) => {
+      state.currentSession = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -178,6 +182,7 @@ export const {
   addExerciseToSession,
   removeExerciseFromSession,
   updateExerciseInSession,
+  clearCurrentSession,
   clearError
 } = workoutSlice.actions;
 
