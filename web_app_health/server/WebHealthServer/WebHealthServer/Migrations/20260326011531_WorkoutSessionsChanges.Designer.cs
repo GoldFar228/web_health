@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebHealthServer.Data;
@@ -11,9 +12,11 @@ using WebHealthServer.Data;
 namespace WebHealthServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260326011531_WorkoutSessionsChanges")]
+    partial class WorkoutSessionsChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,9 +436,14 @@ namespace WebHealthServer.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("TrainingProgramId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("TrainingProgramId");
 
                     b.ToTable("WorkoutSessions");
                 });
@@ -466,6 +474,15 @@ namespace WebHealthServer.Migrations
                         .HasColumnType("character varying(500)");
 
                     b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PlannedReps")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PlannedSets")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PlannedWeightKg")
                         .HasColumnType("integer");
 
                     b.Property<int>("WorkoutSessionId")
@@ -559,7 +576,13 @@ namespace WebHealthServer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebHealthServer.Models.TrainingProgram", "TrainingProgram")
+                        .WithMany()
+                        .HasForeignKey("TrainingProgramId");
+
                     b.Navigation("Client");
+
+                    b.Navigation("TrainingProgram");
                 });
 
             modelBuilder.Entity("WebHealthServer.Models.WorkoutSessionExercise", b =>

@@ -22,6 +22,8 @@ namespace WebHealthServer.Data
         public DbSet<TrainingProgramExercise> TrainingProgramExercises { get; set; }
         public DbSet<MealEntry> MealEntries { get; set; }
         public DbSet<PersonalFood> PersonalFoods { get; set; }
+        public DbSet<WorkoutSession> WorkoutSessions { get; set; }
+        public DbSet<WorkoutSessionExercise> WorkoutSessionExercises { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ...

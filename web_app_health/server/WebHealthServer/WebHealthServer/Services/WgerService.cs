@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using WebHealthServer.Data;
 using WebHealthServer.DTOs.Wger;
 using WebHealthServer.Models;
 //using WebHealthServer.Models.WebHealthServer.DTOs.Wger;
@@ -19,7 +21,11 @@ namespace WebHealthServer.Services
         Task<byte[]?> GetExerciseImageAsync(int exerciseId, CancellationToken ct = default);
         Task<Dictionary<int, WgerExerciseDto>> GetExerciseDetailsBatchAsync(List<int> exerciseIds, CancellationToken ct = default);
         Task<WgerExerciseListDto> SearchExercisesAsync(string? query = null, int? category = null, int? muscle = null, int? equipment = null, int limit = 20, int offset = 0, CancellationToken ct = default);
-        
+
+        Task<List<Exercise>> SyncExercisesToDbAsync(bool updateExisting = false, int? category = null, int batchSize = 100, int maxBatches = 10, CancellationToken ct = default);
+        Task<List<Exercise>> GetLocalExercisesAsync();
+        Task<Exercise> SaveExerciseToDbAsync(int wgerExerciseId, CancellationToken ct = default);
+        Task<Exercise?> GetLocalExerciseByWgerIdAsync(int wgerExerciseId, CancellationToken ct = default);
     }
 
     public class WgerService : IWgerService
@@ -28,6 +34,7 @@ namespace WebHealthServer.Services
         private readonly IMemoryCache _cache;
         private readonly ILogger<WgerService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly AppDbContext _context;
 
         private static readonly JsonSerializerOptions WgerJsonOptions = new()
         {
@@ -38,15 +45,17 @@ namespace WebHealthServer.Services
             IOptions<WgerOptions> options,
             IMemoryCache cache,
             ILogger<WgerService> logger,
-            IHttpClientFactory httpClientFactory)
+            IHttpClientFactory httpClientFactory,
+            AppDbContext context)
         {
             _options = options.Value;
             _cache = cache;
             _logger = logger;
             _httpClientFactory = httpClientFactory;
+            _context = context;
         }
 
-        
+
 
         public async Task<WgerExerciseDto> GetExerciseDetailsAsync(
             int exerciseId, CancellationToken ct = default)
@@ -414,5 +423,167 @@ namespace WebHealthServer.Services
                 }
             }
         }
+
+        public async Task<List<Exercise>> SyncExercisesToDbAsync(
+    bool updateExisting = false,
+    int? category = null,
+    int batchSize = 100,      // ✅ Сколько за один запрос к Wger
+    int maxBatches = 10,      // ✅ Сколько страниц обработать
+    CancellationToken ct = default)
+        {
+            var allSavedExercises = new List<Exercise>();
+            var totalAdded = 0;
+            var totalUpdated = 0;
+            var totalSkipped = 0;
+
+            for (int batch = 0; batch < maxBatches; batch++)
+            {
+                var offset = batch * batchSize;
+
+                // 📡 Запрос к Wger API с пагинацией
+                var wgerExercises = await FetchWgerExercisesAsync(category, batchSize, offset, ct);
+
+                if (wgerExercises == null || wgerExercises.Count == 0)
+                    break;  // ✅ Больше упражнений нет
+
+                foreach (var wgerExercise in wgerExercises)
+                {
+                    var existing = await _context.Exercises
+                        .FirstOrDefaultAsync(e => e.WgerExerciseId == wgerExercise.Id, ct);
+
+                    if (existing == null)
+                    {
+                        // ✅ Добавляем новое
+                        var exercise = await CreateExerciseFromWgerAsync(wgerExercise, ct);
+                        _context.Exercises.Add(exercise);
+                        allSavedExercises.Add(exercise);
+                        totalAdded++;
+                    }
+                    else if (updateExisting)
+                    {
+                        // 🔄 Обновляем существующее
+                        await UpdateExerciseFromWgerAsync(existing, wgerExercise, ct);
+                        totalUpdated++;
+                    }
+                    else
+                    {
+                        // ⏭️ Пропускаем
+                        totalSkipped++;
+                    }
+                }
+
+                _logger.LogInformation("Batch {Batch}: processed {Count} exercises",
+                    batch + 1, wgerExercises.Count);
+            }
+
+            await _context.SaveChangesAsync(ct);
+
+            _logger.LogInformation("Sync completed: {Added} added, {Updated} updated, {Skipped} skipped",
+                totalAdded, totalUpdated, totalSkipped);
+
+            return allSavedExercises;
+        }
+
+        // ✅ Отдельный метод для получения страницы упражнений
+        private async Task<List<WgerExerciseDto>> FetchWgerExercisesAsync(
+            int? category, int limit, int offset, CancellationToken ct)
+        {
+            var queryParams = new Dictionary<string, string>
+            {
+                ["limit"] = limit.ToString(),
+                ["offset"] = offset.ToString(),
+                ["language"] = _options.LanguageId.ToString()
+            };
+
+            if (category.HasValue)
+                queryParams["category"] = category.Value.ToString();
+
+            var url = BuildUrl("exercise/", queryParams);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_options.ApiBaseUrl);
+
+            var response = await client.GetAsync(url, ct);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync(ct);
+            var result = System.Text.Json.JsonSerializer.Deserialize<WgerExerciseListDto>(content, WgerJsonOptions);
+
+            return result?.Results ?? new List<WgerExerciseDto>();
+        }
+
+        // ✅ Создание упражнения из Wger данных
+        private async Task<Exercise> CreateExerciseFromWgerAsync(
+            WgerExerciseDto wgerExercise, CancellationToken ct)
+        {
+            var info = await GetExerciseInfoAsync(wgerExercise.Id, ct);
+
+            return new Exercise
+            {
+                WgerExerciseId = wgerExercise.Id,
+                Name = info.Name ?? wgerExercise.Name ?? $"Exercise {wgerExercise.Id}",
+                Description = info.Description,
+                Category = wgerExercise.Category.ToString(),
+                MuscleGroup = info.Muscles?.FirstOrDefault()?.Name
+            };
+        }
+
+        // ✅ Обновление упражнения из Wger данных
+        private async Task UpdateExerciseFromWgerAsync(
+            Exercise existing, WgerExerciseDto wgerExercise, CancellationToken ct)
+        {
+            var info = await GetExerciseInfoAsync(wgerExercise.Id, ct);
+
+            existing.Name = info.Name ?? existing.Name;
+            existing.Description = info.Description ?? existing.Description;
+            existing.Category = wgerExercise.Category.ToString();
+            existing.MuscleGroup = info.Muscles?.FirstOrDefault()?.Name ?? existing.MuscleGroup;
+        }
+        // ✅ Метод для получения локальных упражнений
+        public async Task<List<Exercise>> GetLocalExercisesAsync()
+        {
+            return await _context.Exercises
+                .OrderBy(e => e.Name)
+                .ToListAsync();
+        }
+        public async Task<Exercise> SaveExerciseToDbAsync(int wgerExerciseId, CancellationToken ct = default)
+        {
+            // Проверяем, есть ли уже в БД
+            var existing = await GetLocalExerciseByWgerIdAsync(wgerExerciseId, ct);
+            if (existing != null)
+            {
+                _logger.LogInformation("Exercise {WgerId} already exists in DB with local ID {LocalId}",
+                    wgerExerciseId, existing.Id);
+                return existing;
+            }
+
+            // Получаем данные из Wger API
+            var wgerExercise = await GetExerciseInfoAsync(wgerExerciseId, ct);
+
+            var exercise = new Exercise
+            {
+                WgerExerciseId = wgerExerciseId,
+                Name = wgerExercise.Name ?? $"Exercise {wgerExerciseId}",
+                Description = wgerExercise.Description,
+                Category = wgerExercise.Category?.Id.ToString(),
+                MuscleGroup = wgerExercise.Muscles?.FirstOrDefault()?.Name
+            };
+
+            _context.Exercises.Add(exercise);
+            await _context.SaveChangesAsync(ct);
+
+            _logger.LogInformation("Saved exercise {Name} (Wger ID: {WgerId}, Local ID: {LocalId})",
+                exercise.Name, wgerExerciseId, exercise.Id);
+
+            return exercise;
+        }
+
+        // ✅ Получить локальное упражнение по Wger ID
+        public async Task<Exercise?> GetLocalExerciseByWgerIdAsync(int wgerExerciseId, CancellationToken ct = default)
+        {
+            return await _context.Exercises
+                .FirstOrDefaultAsync(e => e.WgerExerciseId == wgerExerciseId, ct);
+        }
+
     }
 }

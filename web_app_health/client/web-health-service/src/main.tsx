@@ -12,6 +12,7 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent.tsx'
 import { Provider } from 'react-redux'
 import { store } from './store/index.ts'
 import { NutritionPage } from './pages/NutritionPage/NutritionPage.tsx'
+import { WorkoutPage } from './pages/WorkoutPage/WorkoutPage.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
@@ -22,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/Home' element={<HomePage />} />
-          <Route path='/Trainings' element={<HomePage />} />
+          <Route path='/Trainings' element={<WorkoutPage />} />
           <Route path='/Auth/*' element={<AuthorizePage />} />
           <Route path='/Diets' element={
             <PrivateRoute>

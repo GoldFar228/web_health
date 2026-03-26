@@ -143,6 +143,8 @@ builder.Services.AddScoped<WgerService>();
 // HttpClient для внешних запросов
 builder.Services.AddHttpClient();
 //Добавление репозиториев
+builder.Services.AddScoped<IWorkoutSessionRepository, WorkoutSessionRepository>();
+builder.Services.AddScoped<IWorkoutSessionService, WorkoutSessionService>();
 builder.Services.AddScoped<IMealEntryService, MealEntryService>();
 builder.Services.AddScoped<FatSecretService>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(FatSecretOptions<>));

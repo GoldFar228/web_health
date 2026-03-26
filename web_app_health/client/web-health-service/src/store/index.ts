@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
+import workoutReducer from './workoutSlice';
 
 const loadState = () => {
   try {
@@ -28,10 +29,10 @@ const preloadedState = loadState();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    workout: workoutReducer
   },
   preloadedState,
 });
-
 
 // Типизация для useSelector и useDispatch
 export type RootState = ReturnType<typeof store.getState>;
