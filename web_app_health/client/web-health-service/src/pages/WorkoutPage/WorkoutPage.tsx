@@ -57,7 +57,7 @@ export const WorkoutPage: React.FC = () => {
         <div className="loading">Загрузка...</div>
       ) : showForm ? (
         <WorkoutForm 
-          localExercises={localExercises}
+          // localExercises={localExercises}
           onSuccess={() => setShowForm(false)}
           onCancel={() => setShowForm(false)}
         />

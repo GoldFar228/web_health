@@ -11,6 +11,8 @@
 @import './components/Dashboard/QuickActions/QuickActions.css';
 @import './components/LandingComponent/HeroSection/HeroSection.css';
 @import './components/LandingComponent/FeaturesSecion/FeaturesSection.css';
+@import './components/Workout/WorkoutFormComponent/WorkoutFormComponent.css';
+@import './components/Workout/ExerciseSelectorComponent/ExerciseSelector.css';
 
 * {
   margin: 0;

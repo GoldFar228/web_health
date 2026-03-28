@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using WebHealthServer.Data;
 using WebHealthServer.DTOs;
 using WebHealthServer.Models;
 using WebHealthServer.Repositories;
@@ -8,10 +10,12 @@ namespace WebHealthServer.Services
     public class WorkoutSessionService : IWorkoutSessionService
     {
         private readonly IWorkoutSessionRepository _repository;
+        private readonly AppDbContext _context;
 
-        public WorkoutSessionService(IWorkoutSessionRepository repository)
+        public WorkoutSessionService(IWorkoutSessionRepository repository, AppDbContext context)
         {
             _repository = repository;
+            _context = context;
         }
 
         public async Task<WorkoutSessionDto> CreateSessionAsync(int clientId, CreateWorkoutSessionDto dto)
@@ -21,21 +25,28 @@ namespace WebHealthServer.Services
                 ClientId = clientId,
                 Date = dto.Date,
                 DurationMinutes = dto.DurationMinutes,
-                Notes = dto.Notes ?? string.Empty,
+                Notes = dto.Notes,
                 Status = dto.Status,
-                SessionExercises = dto.Exercises?.Select((e, index) => new WorkoutSessionExercise
-                {
-                    ExerciseId = e.ExerciseId,
-                    ActualSets = e.ActualSets,
-                    ActualReps = e.ActualReps,
-                    ActualWeightKg = e.ActualWeightKg,
-                    Order = index,
-                    Notes = e.Notes ?? string.Empty
-                }).ToList() ?? new List<WorkoutSessionExercise>()
+                SessionExercises = new List<WorkoutSessionExercise>()
             };
 
-            var createdSession = await _repository.CreateAsync(session);
-            return await MapToDtoAsync(createdSession);
+            foreach (var exerciseDto in dto.Exercises)
+            {
+                session.SessionExercises.Add(new WorkoutSessionExercise
+                {
+                    ExerciseId = exerciseDto.ExerciseId,
+                    ActualSets = exerciseDto.ActualSets,      // ✅ Сохраняем факт
+                    ActualReps = exerciseDto.ActualReps,
+                    ActualWeightKg = exerciseDto.ActualWeightKg,
+                    Order = exerciseDto.Order,
+                    Notes = exerciseDto.Notes
+                });
+            }
+
+            _context.WorkoutSessions.Add(session);
+            await _context.SaveChangesAsync();
+
+            return await MapToDtoAsync(session);
         }
 
         public async Task<WorkoutSessionDto?> GetSessionByIdAsync(int id)

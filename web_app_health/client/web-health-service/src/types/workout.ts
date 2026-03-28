@@ -141,6 +141,14 @@ export interface WgerTranslationDto {
 // Тренировочные сессии
 // ============================================
 
+// ✅ Один сет (подход) - для UI
+export interface WorkoutSet {
+  id?: number;
+  order: number;
+  reps: number;
+  weightKg: number;
+  completed: boolean;
+}
 // ✅ Упражнение в рамках тренировочной сессии
 export interface WorkoutSessionExercise {
   id?: number;                    // ID записи в БД (если сохранено)
@@ -150,6 +158,7 @@ export interface WorkoutSessionExercise {
   plannedSets?: number;           // Плановое количество подходов
   plannedReps?: number;           // Плановое количество повторений
   plannedWeightKg?: number;       // Плановый вес (кг)
+  sets: WorkoutSet[]
   actualSets: number;             // Фактическое количество подходов
   actualReps: number;             // Фактическое количество повторений
   actualWeightKg?: number;        // Фактический вес (кг)
@@ -186,9 +195,9 @@ export interface CreateWorkoutSessionDto {
 // ✅ Упражнение для создания сессии
 export interface CreateWorkoutSessionExerciseDto {
   exerciseId: number;
-  plannedSets?: number;
-  plannedReps?: number;
-  plannedWeightKg?: number;
+  // plannedSets?: number;
+  // plannedReps?: number;
+  // plannedWeightKg?: number;
   actualSets: number;
   actualReps: number;
   actualWeightKg?: number;

@@ -9,9 +9,9 @@ namespace WebHealthServer.Models
     {
         public int ExerciseId { get; set; }
 
-        public int? PlannedSets { get; set; }
-        public int? PlannedReps { get; set; }
-        public int? PlannedWeightKg { get; set; }
+        //public int? PlannedSets { get; set; }
+        //public int? PlannedReps { get; set; }
+        //public int? PlannedWeightKg { get; set; }
 
         public int ActualSets { get; set; }
         public int ActualReps { get; set; }
