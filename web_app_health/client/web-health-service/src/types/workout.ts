@@ -47,6 +47,31 @@ export interface Exercise {
   description?: string;
   imageUrl?: string;
 }
+export interface CreateExerciseDto {
+  wgerExerciseId?: number;
+  name: string;
+  description?: string;
+  category?: string;
+  muscleGroup?: string;
+  imageUrl?: string;
+}
+
+export interface UpdateExerciseDto {
+  wgerExerciseId?: number;
+  name: string;
+  description?: string;
+  category?: string;
+  muscleGroup?: string;
+  imageUrl?: string;
+}
+
+// ✅ Ответ от batch добавления
+export interface BatchExerciseResult {
+  totalProcessed: number;
+  added: number;
+  skipped: number;
+  exercises: Exercise[];
+}
 
 // ✅ Упражнение из Wger API (поиск)
 export interface WgerExercise {
@@ -215,3 +240,4 @@ export interface SyncExercisesResponse {
     category?: string;
   }>;
 }
+

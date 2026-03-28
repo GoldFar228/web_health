@@ -147,7 +147,7 @@ builder.Services.AddScoped<IWorkoutSessionRepository, WorkoutSessionRepository>(
 builder.Services.AddScoped<IWorkoutSessionService, WorkoutSessionService>();
 builder.Services.AddScoped<IMealEntryService, MealEntryService>();
 builder.Services.AddScoped<FatSecretService>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(FatSecretOptions<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(AbstractRepository<>));
 builder.Services.AddScoped<IPersonalFoodService, PersonalFoodService>();
 builder.Services.AddScoped<ClientRepository>();
 builder.Services.AddScoped<ClientService>();
@@ -157,8 +157,8 @@ builder.Services.AddScoped<DietRepository>();
 builder.Services.AddScoped<DietService>();
 builder.Services.AddScoped<MealEntryRepository>();
 builder.Services.AddScoped<MealEntryService>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<ExerciseRepository>();
-builder.Services.AddScoped<ExerciseService>();
 builder.Services.AddScoped<TrainingProgramRepository>();
 builder.Services.AddScoped<TrainingProgramService>();
 builder.Services.AddScoped<JwtService>();

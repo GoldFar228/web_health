@@ -1,180 +1,168 @@
-// /src/components/Workout/ExerciseSelector.tsx
+// /src/components/Workout/ExerciseSelectorComponent/ExerciseSelector.tsx
 
 import React, { useState } from 'react';
 import { workoutApi } from '../../../services/workoutApi';
-import type { Exercise, WgerExercise } from '../../../types/workout';
-import './ExerciseSelector.css';
+import type { Exercise, CreateExerciseDto } from '../../../types/workout';
 
 interface Props {
   onExerciseSelect: (exercise: Exercise) => void;
   localExercises: Exercise[];
-  onClose: () => void;
 }
 
-export const ExerciseSelector: React.FC<Props> = ({ onExerciseSelect, localExercises, onClose }) => {
+export const ExerciseSelector: React.FC<Props> = ({ onExerciseSelect, localExercises }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<WgerExercise[]>([]);
+  const [searchResults, setSearchResults] = useState<Exercise[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedExercise, setSelectedExercise] = useState<WgerExercise | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
+  
+  // Для добавления нового упражнения
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newExercise, setNewExercise] = useState<CreateExerciseDto>({
+    name: '',
+    description: '',
+    category: '',
+    muscleGroup: '',
+    imageUrl: ''
+  });
 
-  // 🔍 Поиск ТОЛЬКО в Wger API
+  // 🔍 Поиск в локальной БД (вместо Wger API)
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
       setSearchResults([]);
       return;
     }
-    
+
     setIsSearching(true);
     try {
-      const results = await workoutApi.searchExercises(searchTerm, undefined, 20);
+      const results = await workoutApi.searchExercises(searchTerm);
       setSearchResults(results);
     } catch (error) {
       console.error('Search failed:', error);
-      alert('Ошибка поиска упражнений. Попробуйте позже.');
+      setSearchResults([]);
     } finally {
       setIsSearching(false);
     }
   };
 
-  // 💾 Сохранение упражнения в локальную БД + добавление в тренировку
-  const handleSelectExercise = async (wgerExercise: WgerExercise) => {
-    setIsSaving(true);
-    try {
-      // 1. Сохраняем в локальную БД (если нет - создаст, если есть - вернёт существующее)
-      const savedExercise = await workoutApi.saveExerciseToDb(wgerExercise.id);
-      
-      // 2. Добавляем в тренировку
-      onExerciseSelect(savedExercise);
-      
-      // 3. Закрываем селектор
-      onClose();
-    } catch (error: any) {
-      console.error('Failed to save exercise:', error);
-      alert(`Не удалось сохранить упражнение: ${error.message || 'Ошибка'}`);
-    } finally {
-      setIsSaving(false);
+  // ➕ Добавить новое упражнение
+  const handleAddExercise = async () => {
+    if (!newExercise.name.trim()) {
+      alert('Название упражнения обязательно');
+      return;
     }
-  };
 
-  // 🔤 Быстрый поиск по Enter
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+    try {
+      const added = await workoutApi.addExercise(newExercise);
+      onExerciseSelect(added);
+      setShowAddForm(false);
+      setNewExercise({ name: '', description: '', category: '', muscleGroup: '', imageUrl: '' });
+    } catch (error) {
+      console.error('Failed to add exercise:', error);
+      alert('Ошибка добавления упражнения');
     }
   };
 
   return (
     <div className="exercise-selector">
-      <div className="selector-header">
-        <h3>🔍 Поиск упражнений (Wger API)</h3>
-        <button type="button" className="close-btn" onClick={onClose}>✕</button>
+      <h3>Добавить упражнение</h3>
+
+      {/* 🔍 Поиск по локальной БД */}
+      <div className="search-box">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Поиск упражнений..."
+          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+        />
+        <button onClick={handleSearch} disabled={isSearching}>
+          {isSearching ? 'Поиск...' : 'Найти'}
+        </button>
       </div>
 
-      <div className="search-section">
-        <div className="search-box">
+      {/* Результаты поиска */}
+      {searchResults.length > 0 && (
+        <div className="search-results">
+          <h4>Найдено: {searchResults.length}</h4>
+          {searchResults.map((exercise) => (
+            <div key={exercise.id} className="exercise-item">
+              <span>{exercise.name}</span>
+              {exercise.muscleGroup && (
+                <small className="muscle-group">{exercise.muscleGroup}</small>
+              )}
+              <button onClick={() => onExerciseSelect(exercise)}>
+                + Выбрать
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Кнопка добавления нового */}
+      <button 
+        className="btn-add" 
+        onClick={() => setShowAddForm(!showAddForm)}
+      >
+        {showAddForm ? 'Отмена' : '+ Добавить новое упражнение'}
+      </button>
+
+      {/* Форма добавления */}
+      {showAddForm && (
+        <div className="add-exercise-form">
+          <h4>Новое упражнение</h4>
+          
           <input
             type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Введите название упражнения (например: bench press)"
-            onKeyPress={handleKeyPress}
-            className="form-input"
-            autoFocus
+            placeholder="Название *"
+            value={newExercise.name}
+            onChange={(e) => setNewExercise({ ...newExercise, name: e.target.value })}
           />
-          <button 
-            type="button" 
-            onClick={handleSearch} 
-            disabled={isSearching || isSaving}
-            className="btn btn-primary"
-          >
-            {isSearching ? '⏳ Поиск...' : '🔍 Найти'}
-          </button>
+          
+          <textarea
+            placeholder="Описание"
+            value={newExercise.description}
+            onChange={(e) => setNewExercise({ ...newExercise, description: e.target.value })}
+          />
+          
+          <input
+            type="text"
+            placeholder="Категория (chest, legs, back...)"
+            value={newExercise.category}
+            onChange={(e) => setNewExercise({ ...newExercise, category: e.target.value })}
+          />
+          
+          <input
+            type="text"
+            placeholder="Мышечная группа"
+            value={newExercise.muscleGroup}
+            onChange={(e) => setNewExercise({ ...newExercise, muscleGroup: e.target.value })}
+          />
+          
+          <input
+            type="text"
+            placeholder="URL изображения"
+            value={newExercise.imageUrl}
+            onChange={(e) => setNewExercise({ ...newExercise, imageUrl: e.target.value })}
+          />
+          
+          <button onClick={handleAddExercise}>Сохранить</button>
         </div>
+      )}
 
-        {/* Индикатор сохранения */}
-        {isSaving && (
-          <div className="saving-indicator">
-            <span className="spinner">⏳</span>
-            <span>Сохранение упражнения в базу...</span>
-          </div>
-        )}
-
-        {/* Результаты поиска */}
-        {searchResults.length > 0 && (
-          <div className="search-results">
-            <div className="results-header">
-              <span>Найдено: {searchResults.length}</span>
-              <span className="hint">Кликните для добавления в тренировку</span>
-            </div>
-            
-            {searchResults.map((exercise) => (
-              <div 
-                key={exercise.id} 
-                className="exercise-item"
-                onClick={() => handleSelectExercise(exercise)}
-              >
-                <div className="exercise-item-info">
-                  <span className="exercise-item-name">
-                    {exercise.exerciseName || exercise.name || `Exercise ${exercise.id}`}
-                  </span>
-                  <span className="exercise-item-id">Wger ID: {exercise.id}</span>
-                </div>
-                <button 
-                  type="button"
-                  className="btn btn-sm btn-success"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSelectExercise(exercise);
-                  }}
-                  disabled={isSaving}
-                >
-                  {isSaving ? '⏳' : '+ Добавить'}
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Нет результатов */}
-        {searchTerm && searchResults.length === 0 && !isSearching && (
-          <div className="empty-state">
-            <p>😕 Ничего не найдено</p>
-            <p className="hint">Попробуйте другой поисковый запрос (лучше на английском)</p>
-          </div>
-        )}
-
-        {/* Подсказка для первого поиска */}
-        {!searchTerm && (
-          <div className="empty-state">
-            <p>👆 Введите название упражнения для поиска</p>
-            <p className="hint">Поиск выполняется в базе Wger API (на английском)</p>
-            <div className="popular-searches">
-              <p className="popular-label">Популярные запросы:</p>
-              <div className="popular-tags">
-                <button type="button" onClick={() => { setSearchTerm('bench press'); handleSearch(); }}>
-                  Bench Press
-                </button>
-                <button type="button" onClick={() => { setSearchTerm('squat'); handleSearch(); }}>
-                  Squat
-                </button>
-                <button type="button" onClick={() => { setSearchTerm('deadlift'); handleSearch(); }}>
-                  Deadlift
-                </button>
-                <button type="button" onClick={() => { setSearchTerm('pull up'); handleSearch(); }}>
-                  Pull Up
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Информация о локальных упражнениях */}
+      {/* Локальные упражнения */}
       {localExercises.length > 0 && (
-        <div className="local-info">
-          <p>📚 У вас уже сохранено упражнений: <strong>{localExercises.length}</strong></p>
-          <p className="hint">Они будут доступны при создании тренировки</p>
+        <div className="local-exercises">
+          <h4>Ваши упражнения ({localExercises.length})</h4>
+          {localExercises.map((exercise) => (
+            <div key={exercise.id} className="exercise-item">
+              <span>{exercise.name}</span>
+              {exercise.muscleGroup && (
+                <small className="muscle-group">{exercise.muscleGroup}</small>
+              )}
+              <button onClick={() => onExerciseSelect(exercise)}>
+                + Выбрать
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </div>

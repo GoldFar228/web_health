@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Win32;
+using WebHealthServer.DTOs;
 using WebHealthServer.Models;
 using WebHealthServer.Models.Enums;
 
@@ -24,6 +25,9 @@ namespace WebHealthServer.Services
                 .ForMember(x => x.Diet, opt => opt.Ignore());
             //.ForMember(x => x.TrainingProgram, opt => opt.Ignore());
 
+            CreateMap<CreateExerciseDto, Exercise>();
+            CreateMap<UpdateExerciseDto, Exercise>();
+            CreateMap<Exercise, ExerciseDto>();
             CreateMap<UpdateClientDTO, Client>()
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.Password, opt => opt.Ignore()) // Пароль не меняем через это DTO

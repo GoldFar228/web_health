@@ -5,8 +5,7 @@ import type {
   WorkoutSession,
   CreateWorkoutSessionDto,
   Exercise,
-  WgerExercise,
-  // WgerExerciseListDto
+  CreateExerciseDto
 } from '../types/workout';
 
 const API_BASE_URL = 'https://localhost:7073/api';
@@ -22,41 +21,6 @@ const getAuthHeaders = () => {
 };
 
 export const workoutApi = {
-  // 🔍 Поиск упражнений в Wger API
-  searchExercises: async (
-    term?: string,
-    category?: number,
-    limit: number = 20
-  ): Promise<WgerExercise[]> => {
-    const params = new URLSearchParams();
-    if (term) params.append('term', term);
-    if (category) params.append('category', category.toString());
-    params.append('limit', limit.toString());
-
-    const response = await axios.get(
-      `${API_BASE_URL}/Wger/exercises?${params.toString()}`
-    );
-    return response.data.results || [];
-  },
-
-  // 💾 Сохранить упражнение в локальную БД
-  saveExerciseToDb: async (wgerExerciseId: number): Promise<Exercise> => {
-    const response = await axios.post(
-      `${API_BASE_URL}/Wger/exercises/${wgerExerciseId}/save-to-db`,
-      null,
-      getAuthHeaders()
-    );
-    return response.data;
-  },
-
-  // 📋 Получить все локальные упражнения
-  getLocalExercises: async (): Promise<Exercise[]> => {
-    const response = await axios.get(
-      `${API_BASE_URL}/Wger/exercises/local`,
-      getAuthHeaders()
-    );
-    return response.data;
-  },
   // 📋 Получить все тренировки клиента
   getAllSessions: async (): Promise<WorkoutSession[]> => {
     const response = await axios.get(
@@ -103,13 +67,84 @@ export const workoutApi = {
     );
   },
 
-  // 📦 Массовое сохранение упражнений
-  saveExercisesBatch: async (exerciseIds: number[]): Promise<Exercise[]> => {
+  // ============================================
+  // 🏋️ УПРАЖНЕНИЯ - ИСПРАВЛЕНО (локальная БД)
+  // ============================================
+
+  // ✅ Получить все упражнения из локальной БД
+  getLocalExercises: async (): Promise<Exercise[]> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/Exercise/GetExercises`,  // ⚠️ Было: /Wger/exercises/local
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // 🔍 Поиск упражнений по названию (в локальной БД)
+  searchExercises: async (
+    term: string,
+    limit: number = 50
+  ): Promise<Exercise[]> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/Exercise/SearchExercises/search?term=${encodeURIComponent(term)}`,  // ⚠️ Было: /Wger/exercises
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // 📂 Получить упражнения по категории
+  getExercisesByCategory: async (category: string): Promise<Exercise[]> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/Exercise/GetByCategory/category/${encodeURIComponent(category)}`,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // 💪 Получить упражнения по мышечной группе
+  getExercisesByMuscleGroup: async (muscleGroup: string): Promise<Exercise[]> => {
+    const response = await axios.get(
+      `${API_BASE_URL}/Exercise/GetByMuscle/muscle/${encodeURIComponent(muscleGroup)}`,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // ➕ Добавить новое упражнение в БД
+  addExercise: async (dto: CreateExerciseDto): Promise<Exercise> => {
     const response = await axios.post(
-      `${API_BASE_URL}/Wger/exercises/search-and-save`,
-      exerciseIds,
+      `${API_BASE_URL}/Exercise/AddExercise`,  // ⚠️ Новый эндпоинт
+      dto,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // 📦 Добавить несколько упражнений (batch)
+  addExercisesBatch: async (exercises: CreateExerciseDto[]): Promise<Exercise[]> => {
+    const response = await axios.post(
+      `${API_BASE_URL}/Exercise/AddExercisesBatch/batch`,  // ⚠️ Новый эндпоинт
+      exercises,
       getAuthHeaders()
     );
     return response.data.exercises;
+  },
+
+  // ✏️ Обновить упражнение
+  updateExercise: async (id: number, dto: Partial<Exercise>): Promise<Exercise> => {
+    const response = await axios.put(
+      `${API_BASE_URL}/Exercise/UpdateExercise/${id}`,
+      dto,
+      getAuthHeaders()
+    );
+    return response.data;
+  },
+
+  // ❌ Удалить упражнение
+  deleteExercise: async (id: number): Promise<void> => {
+    await axios.delete(
+      `${API_BASE_URL}/Exercise/DeleteExercise/${id}`,
+      getAuthHeaders()
+    );
   }
 };

@@ -4,7 +4,7 @@ using WebHealthServer.Models;
 
 namespace WebHealthServer.Repositories
 {
-    public class MealEntryRepository : FatSecretOptions<MealEntry>
+    public class MealEntryRepository : AbstractRepository<MealEntry>
     {
         public MealEntryRepository(AppDbContext context) : base(context)
         {

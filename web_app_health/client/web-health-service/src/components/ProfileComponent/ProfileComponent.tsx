@@ -275,7 +275,7 @@ const ProfileComponent = () => {
                                 name="healthIssues"
                                 value={formData.healthIssues}
                                 onChange={handleChange}
-                                rows='3'
+                                rows={Number.parseInt('3')}
                                 placeholder="Опишите ваши проблемы со здоровьем, если они есть..."
                             />
                         </div>
