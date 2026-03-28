@@ -5,11 +5,11 @@ using WebHealthServer.Models.Enums;
 
 namespace WebHealthServer.Models
 {
-    public class CreateWorkoutSessionExerciseDto
+    public class UpdateWorkoutSessionExerciseDto
     {
         public int ExerciseId { get; set; }
 
-        // ✅ JSON массив сетов
+        // ✅ Массив сетов (JSON)
         public List<WorkoutSetDto> Sets { get; set; } = new();
 
         public int Order { get; set; }

@@ -1,11 +1,10 @@
 // /src/components/Workout/WorkoutFormComponent/WorkoutFormComponent.tsx
 
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  createWorkoutSession,
-  addExerciseToSession,
-  removeExerciseFromSession,
+import { 
+  createWorkoutSession, 
+  addExerciseToSession, 
+  removeExerciseFromSession, 
   updateExerciseInSession,
   updateSetInExercise,
   addSetToExercise,
@@ -15,17 +14,18 @@ import {
 import { ExerciseSelector } from '../ExerciseSelectorComponent/ExerciseSelector';
 import { WorkoutStatusValue, type WorkoutStatus } from '../../../types/workout';
 import type { Exercise, CreateWorkoutSessionDto } from '../../../types/workout';
-import type { RootState, AppDispatch } from '../../../store/index';
+import { useAppDispatch, useAppSelector } from '../../../store';
 import './WorkoutFormComponent.css';
 
 interface Props {
   onSuccess: () => void;
   onCancel: () => void;
+  isOpen: boolean;  // ✅ Добавляем prop
 }
 
-export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { currentSession, localExercises } = useSelector((state: RootState) => state.workout);
+export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel, isOpen }) => {
+  const dispatch = useAppDispatch();
+  const { currentSession, localExercises } = useAppSelector((state) => state.workout);
 
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [durationMinutes, setDurationMinutes] = useState(60);
@@ -34,7 +34,7 @@ export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   React.useEffect(() => {
-    if (!currentSession) {
+    if (!currentSession && isOpen) {
       dispatch(setCurrentSession({
         date: new Date().toISOString(),
         durationMinutes: 60,
@@ -43,7 +43,14 @@ export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
         exercises: []
       }));
     }
-  }, [dispatch, currentSession]);
+  }, [dispatch, currentSession, isOpen]);
+
+  // ✅ Сброс формы при закрытии
+  React.useEffect(() => {
+    if (!isOpen) {
+      dispatch(setCurrentSession(null));
+    }
+  }, [isOpen, dispatch]);
 
   const handleAddExercise = (exercise: Exercise) => {
     dispatch(addExerciseToSession(exercise));
@@ -77,12 +84,9 @@ export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
 
     setIsSaving(true);
 
-    // ✅ Агрегируем факты из сетов
     const exercises = currentSession.exercises.map((ex, index) => ({
       exerciseId: ex.exerciseId,
-      actualSets: ex.actualSets,
-      actualReps: ex.actualReps,
-      actualWeightKg: ex.actualWeightKg,
+      sets: ex.sets,
       order: index,
       notes: ex.notes || ''
     }));
@@ -112,210 +116,213 @@ export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
 
   const exercises = currentSession?.exercises || [];
 
+  // ✅ Не рендерим, если закрыто (оптимизация)
+  if (!isOpen) return null;
+
   return (
-    <div className="workout-form">
-      <h2 className="workout-form__title">Новая тренировка</h2>
-
-      <form className="workout-form__body" onSubmit={(e) => e.preventDefault()}>
-        {/* Основные поля */}
-        <div className="workout-form__fields">
-          <div className="workout-form__field">
-            <label className="workout-form__label">Дата:</label>
-            <input
-              type="date"
-              className="workout-form__input"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="workout-form__field">
-            <label className="workout-form__label">Длительность (мин):</label>
-            <input
-              type="number"
-              className="workout-form__input"
-              value={durationMinutes}
-              onChange={(e) => setDurationMinutes(Number(e.target.value))}
-              min="1"
-              required
-            />
-          </div>
-
-          <div className="workout-form__field">
-            <label className="workout-form__label">Статус:</label>
-            <select
-              className="workout-form__select"
-              value={status}
-              onChange={(e) => setStatus(Number(e.target.value) as WorkoutStatus)}
-            >
-              <option value={WorkoutStatusValue.Planned}>Запланирована</option>
-              <option value={WorkoutStatusValue.InProgress}>В процессе</option>
-              <option value={WorkoutStatusValue.Completed}>Завершена</option>
-              <option value={WorkoutStatusValue.Cancelled}>Отменена</option>
-            </select>
-          </div>
-
-          <div className="workout-form__field workout-form__field--full">
-            <label className="workout-form__label">Заметки:</label>
-            <textarea
-              className="workout-form__textarea"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={3}
-              placeholder="Дополнительные заметки..."
-            />
-          </div>
+    <>
+      {/* ✅ Overlay (просто затемнение, без blur) */}
+      <div 
+        className="workout-drawer-overlay" 
+        onClick={handleCancel}
+        aria-hidden="true"
+      />
+      
+      {/* ✅ Drawer панель */}
+      <div className={`workout-drawer ${isOpen ? 'workout-drawer--open' : ''}`}>
+        <div className="workout-drawer__header">
+          <h2 className="workout-drawer__title">💪 Новая тренировка</h2>
+          <button 
+            className="workout-drawer__close-btn" 
+            onClick={handleCancel}
+            title="Закрыть"
+          >
+            ✕
+          </button>
         </div>
 
-        {/* Selector упражнений */}
-        <div className="workout-form__section">
-          <ExerciseSelector
-            onExerciseSelect={handleAddExercise}
-            localExercises={localExercises}
-          />
-        </div>
+        <div className="workout-drawer__content">
+          <form className="workout-drawer__form" onSubmit={(e) => e.preventDefault()}>
+            {/* Основные поля */}
+            <div className="workout-drawer__fields">
+              <div className="workout-drawer__field">
+                <label className="workout-drawer__label">Дата:</label>
+                <input
+                  type="date"
+                  className="workout-drawer__input"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </div>
 
-        {/* Список упражнений */}
-        {exercises.length > 0 && (
-          <div className="workout-form__section">
-            <h3 className="workout-form__subtitle">Упражнения ({exercises.length})</h3>
-            <div className="workout-form__exercises">
-              {exercises.map((exercise, exIndex) => (
-                <div key={exIndex} className="workout-form__exercise-card">
-                  <div className="workout-form__exercise-header">
-                    <span className="workout-form__exercise-name">
-                      {exercise.exerciseName || `Упражнение #${exercise.exerciseId}`}
-                    </span>
-                    <button
-                      type="button"
-                      className="workout-form__btn workout-form__btn--remove"
-                      onClick={() => handleRemoveExercise(exIndex)}
-                    >
-                      ✕
-                    </button>
-                  </div>
+              <div className="workout-drawer__field">
+                <label className="workout-drawer__label">Длительность (мин):</label>
+                <input
+                  type="number"
+                  className="workout-drawer__input"
+                  value={durationMinutes}
+                  onChange={(e) => setDurationMinutes(Number(e.target.value))}
+                  min="1"
+                  required
+                />
+              </div>
 
-                  {/* Таблица сетов */}
-                  <div className="workout-form__sets-table">
-                    <div className="workout-form__sets-header">
-                      <span className="workout-form__sets-col">№</span>
-                      <span className="workout-form__sets-col">Повторы</span>
-                      <span className="workout-form__sets-col">Вес (кг)</span>
-                      <span className="workout-form__sets-col" title="Отметьте выполненные подходы">
-                        ✓ Выполнено
-                      </span>
-                      <span className="workout-form__sets-col"></span>
-                    </div>
+              <div className="workout-drawer__field">
+                <label className="workout-drawer__label">Статус:</label>
+                <select
+                  className="workout-drawer__select"
+                  value={status}
+                  onChange={(e) => setStatus(Number(e.target.value) as WorkoutStatus)}
+                >
+                  <option value={WorkoutStatusValue.Planned}>Запланирована</option>
+                  <option value={WorkoutStatusValue.InProgress}>В процессе</option>
+                  <option value={WorkoutStatusValue.Completed}>Завершена</option>
+                  <option value={WorkoutStatusValue.Cancelled}>Отменена</option>
+                </select>
+              </div>
 
-                    {exercise.sets.map((set, setIndex) => (
-                      <div key={setIndex} className="workout-form__sets-row">
-                        <span className="workout-form__sets-col">{setIndex + 1}</span>
-                        <input
-                          type="number"
-                          className="workout-form__sets-input"
-                          value={set.reps}
-                          onChange={(e) => handleUpdateSet(exIndex, setIndex, 'reps', Number(e.target.value))}
-                          min="1"
-                        />
-                        <input
-                          type="number"
-                          className="workout-form__sets-input"
-                          value={set.weightKg}
-                          onChange={(e) => handleUpdateSet(exIndex, setIndex, 'weightKg', Number(e.target.value))}
-                          min="0"
-                          step="0.5"
-                        />
-                        <div className="workout-form__sets-col workout-form__checkbox-wrapper">
-                          <input
-                            type="checkbox"
-                            className="workout-form__sets-checkbox"
-                            checked={set.completed}
-                            onChange={(e) => handleUpdateSet(exIndex, setIndex, 'completed', e.target.checked)}
-                            id={`set-${exIndex}-${setIndex}-completed`}
-                          />
-                          <label
-                            htmlFor={`set-${exIndex}-${setIndex}-completed`}
-                            className="workout-form__checkbox-label"
-                            title="Отметьте, если подход выполнен"
-                          >
-                            ✓
-                          </label>
-                        </div>
+              <div className="workout-drawer__field workout-drawer__field--full">
+                <label className="workout-drawer__label">Заметки:</label>
+                <textarea
+                  className="workout-drawer__textarea"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={2}
+                  placeholder="Дополнительные заметки..."
+                />
+              </div>
+            </div>
+
+            {/* Selector упражнений */}
+            <div className="workout-drawer__section">
+              <ExerciseSelector 
+                onExerciseSelect={handleAddExercise}
+                localExercises={localExercises}
+              />
+            </div>
+
+            {/* Список упражнений */}
+            {exercises.length > 0 && (
+              <div className="workout-drawer__section">
+                <h3 className="workout-drawer__subtitle">
+                  Упражнения ({exercises.length})
+                </h3>
+                <div className="workout-drawer__exercises">
+                  {exercises.map((exercise, exIndex) => (
+                    <div key={exIndex} className="workout-drawer__exercise-card">
+                      <div className="workout-drawer__exercise-header">
+                        <span className="workout-drawer__exercise-name">
+                          {exercise.exerciseName || `Упражнение #${exercise.exerciseId}`}
+                        </span>
                         <button
                           type="button"
-                          className="workout-form__btn workout-form__btn--remove-set"
-                          onClick={() => handleRemoveSet(exIndex, setIndex)}
-                          disabled={exercise.sets.length <= 1}
-                          title="Удалить подход"
+                          className="workout-drawer__btn workout-drawer__btn--remove"
+                          onClick={() => handleRemoveExercise(exIndex)}
                         >
-                          −
+                          ✕
                         </button>
                       </div>
-                    ))}
-                  </div>
+                      
+                      {/* Таблица сетов */}
+                      <div className="workout-drawer__sets-table">
+                        <div className="workout-drawer__sets-header">
+                          <span className="workout-drawer__sets-col">№</span>
+                          <span className="workout-drawer__sets-col">Повторы</span>
+                          <span className="workout-drawer__sets-col">Вес</span>
+                          <span className="workout-drawer__sets-col">✓</span>
+                          <span></span>
+                        </div>
+                        
+                        {exercise.sets.map((set, setIndex) => (
+                          <div key={setIndex} className="workout-drawer__sets-row">
+                            <span className="workout-drawer__sets-col">{setIndex + 1}</span>
+                            <input
+                              type="number"
+                              className="workout-drawer__sets-input"
+                              value={set.reps}
+                              onChange={(e) => handleUpdateSet(exIndex, setIndex, 'reps', Number(e.target.value))}
+                              min="1"
+                            />
+                            <input
+                              type="number"
+                              className="workout-drawer__sets-input"
+                              value={set.weightKg}
+                              onChange={(e) => handleUpdateSet(exIndex, setIndex, 'weightKg', Number(e.target.value))}
+                              min="0"
+                              step="0.5"
+                            />
+                            <input
+                              type="checkbox"
+                              className="workout-drawer__sets-checkbox"
+                              checked={set.completed}
+                              onChange={(e) => handleUpdateSet(exIndex, setIndex, 'completed', e.target.checked)}
+                            />
+                            <button
+                              type="button"
+                              className="workout-drawer__btn workout-drawer__btn--remove-set"
+                              onClick={() => handleRemoveSet(exIndex, setIndex)}
+                              disabled={exercise.sets.length <= 1}
+                            >
+                              −
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <button
+                        type="button"
+                        className="workout-drawer__btn workout-drawer__btn--add-set"
+                        onClick={() => handleAddSet(exIndex)}
+                      >
+                        + Подход
+                      </button>
 
-                  {/* Кнопка добавить сет */}
-                  <button
-                    type="button"
-                    className="workout-form__btn workout-form__btn--add-set"
-                    onClick={() => handleAddSet(exIndex)}
-                  >
-                    + Добавить подход
-                  </button>
+                      <div className="workout-drawer__exercise-summary">
+                        <span className="workout-drawer__summary-badge">
+                          ✅ {exercise.completedSets} подходов
+                        </span>
+                        <span className="workout-drawer__summary-badge">
+                          🏋️ {exercise.totalTonnage.toFixed(0)} кг
+                        </span>
+                      </div>
 
-                  {/* Итого по упражнению */}
-                  <div className="workout-form__exercise-summary">
-                    <span className="workout-form__summary-badge">
-                      ✅ {exercise.actualSets} из {exercise.sets.length} подходов
-                    </span>
-                    <span className="workout-form__summary-badge">
-                      🔄 {exercise.actualReps} повторов
-                    </span>
-                    <span className="workout-form__summary-badge">
-                      🏋️ {exercise.actualWeightKg} кг (сред.)
-                    </span>
-                    <span className="workout-form__summary-badge workout-form__summary-badge--info" title="Только выполненные подходы учитываются">
-                      ℹ️ Только ✓ подсчитываются
-                    </span>
-                  </div>
-
-                  {/* Заметки */}
-                  <div className="workout-form__exercise-notes">
-                    <label>Заметки:</label>
-                    <input
-                      type="text"
-                      className="workout-form__input-full"
-                      value={exercise.notes || ''}
-                      onChange={(e) => handleUpdateExercise(exIndex, 'notes', e.target.value)}
-                      placeholder="Заметки к упражнению..."
-                    />
-                  </div>
+                      <div className="workout-drawer__exercise-notes">
+                        <input
+                          type="text"
+                          className="workout-drawer__input-full"
+                          value={exercise.notes || ''}
+                          onChange={(e) => handleUpdateExercise(exIndex, 'notes', e.target.value)}
+                          placeholder="Заметки..."
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+              </div>
+            )}
+          </form>
+        </div>
 
-        {/* Кнопки */}
-        <div className="workout-form__actions">
+        {/* Кнопки действий (fixed внизу) */}
+        <div className="workout-drawer__footer">
           <button
             type="button"
-            className="workout-form__btn workout-form__btn--cancel"
+            className="workout-drawer__btn workout-drawer__btn--cancel"
             onClick={handleCancel}
           >
             Отмена
           </button>
           <button
             type="button"
-            className="workout-form__btn workout-form__btn--save"
+            className="workout-drawer__btn workout-drawer__btn--save"
             onClick={handleSaveSession}
             disabled={isSaving || exercises.length === 0}
           >
-            {isSaving ? 'Сохранение...' : '💾 Сохранить тренировку'}
+            {isSaving ? 'Сохранение...' : '💾 Сохранить'}
           </button>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };

@@ -7,9 +7,10 @@ namespace WebHealthServer.Models
 {
     public class UpdateSessionExerciseDto
     {
-        public int ActualSets { get; set; }
-        public int ActualReps { get; set; }
-        public int? ActualWeightKg { get; set; }
+        // ✅ Обновляем сеты (полный массив)
+        public List<WorkoutSetDto> Sets { get; set; } = new();
+
+        [MaxLength(500)]
         public string Notes { get; set; } = string.Empty;
     }
 }

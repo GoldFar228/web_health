@@ -1,0 +1,657 @@
+/* /src/components/Workout/WorkoutSessionDetailComponent/WorkoutSessionDetailComponent.css */
+
+/* Overlay */
+.session-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-4);
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+}
+
+/* Container */
+.session-detail {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.session-detail__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-6);
+  border-bottom: 2px solid var(--gray-200);
+  background: var(--gray-50);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.session-detail__title-section {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.session-detail__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  margin: 0;
+}
+
+.session-detail__status {
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.session-detail__status--status-planned {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.session-detail__status--status-in-progress {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.session-detail__status--status-completed {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.session-detail__status--status-cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.session-detail__close {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--gray-200);
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-600);
+}
+
+.session-detail__close:hover {
+  background: var(--gray-300);
+  color: var(--gray-800);
+}
+
+/* Info */
+.session-detail__info {
+  padding: var(--spacing-6);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.session-detail__info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.session-detail__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.session-detail__info-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.session-detail__info-value {
+  font-size: 1.1rem;
+  color: var(--gray-800);
+  font-weight: 600;
+}
+
+/* Summary */
+.session-detail__summary {
+  padding: var(--spacing-6);
+  border-bottom: 2px solid var(--gray-200);
+  background: var(--gray-50);
+}
+
+.session-detail__subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-4);
+}
+
+.session-detail__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-4);
+}
+
+.session-detail__stat-card {
+  background: var(--white);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  border: 2px solid var(--gray-200);
+  transition: all 0.2s;
+}
+
+.session-detail__stat-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.session-detail__stat-card--tonnage {
+  background: var(--primary-light);
+  border-color: var(--primary-color);
+}
+
+.session-detail__stat-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-1);
+}
+
+.session-detail__stat-card--tonnage .session-detail__stat-value {
+  color: var(--primary-dark);
+}
+
+.session-detail__stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+/* Exercises */
+.session-detail__exercises {
+  padding: var(--spacing-6);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.session-detail__exercise-card {
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  transition: all 0.2s;
+}
+
+.session-detail__exercise-card:last-child {
+  margin-bottom: 0;
+}
+
+.session-detail__exercise-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.session-detail__exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-3);
+  padding-bottom: var(--spacing-3);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.session-detail__exercise-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.session-detail__exercise-number {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.session-detail__exercise-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.session-detail__muscle-group {
+  padding: var(--spacing-1) var(--spacing-3);
+  background: var(--gray-100);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: var(--gray-600);
+}
+
+/* Sets Table */
+.session-detail__sets-table {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+  margin: var(--spacing-3) 0;
+}
+
+.session-detail__sets-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-2);
+}
+
+.session-detail__sets-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-2);
+  align-items: center;
+  border: 1px solid var(--gray-200);
+}
+
+.session-detail__sets-row:last-child {
+  margin-bottom: 0;
+}
+
+.session-detail__sets-row--completed {
+  background: #d1fae5;
+  border-color: #059669;
+}
+
+.session-detail__sets-col {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+}
+
+.session-detail__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.session-detail__status-badge--success {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.session-detail__status-badge--pending {
+  background: var(--gray-200);
+  color: var(--gray-600);
+}
+
+/* Exercise Stats */
+.session-detail__exercise-stats {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3);
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  margin-top: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+.session-detail__stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.session-detail__stat-badge--tonnage {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Notes */
+.session-detail__notes {
+  padding: var(--spacing-6);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.session-detail__exercise-notes {
+  margin-top: var(--spacing-3);
+  padding: var(--spacing-3);
+  background: var(--yellow-50);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--yellow-500);
+}
+
+.session-detail__notes-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--spacing-2);
+}
+
+.session-detail__notes-text {
+  font-size: 0.95rem;
+  color: var(--gray-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Empty */
+.session-detail__empty {
+  text-align: center;
+  padding: var(--spacing-8);
+  color: var(--gray-500);
+}
+
+/* Actions */
+.session-detail__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-4);
+  padding: var(--spacing-6);
+  background: var(--gray-50);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+
+.session-detail__btn {
+  padding: var(--spacing-3) var(--spacing-6);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.session-detail__btn--close {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.session-detail__btn--close:hover {
+  background: var(--gray-300);
+}
+
+.session-detail__btn--delete {
+  background: var(--danger-color);
+  color: var(--white);
+}
+
+.session-detail__btn--delete:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .session-detail__info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .session-detail__stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .session-detail__sets-header,
+  .session-detail__sets-row {
+    grid-template-columns: 30px 1fr 1fr 1fr;
+    font-size: 0.8rem;
+  }
+  
+  .session-detail__header {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+  
+  .session-detail__actions {
+    flex-direction: column;
+  }
+  
+  .session-detail__btn {
+    width: 100%;
+  }
+}
+.session-detail__edit-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--gray-100);
+  border: 2px solid var(--gray-300);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.session-detail__edit-btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* ✅ Badge режима редактирования */
+.session-detail__edit-mode-badge {
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ✅ Поля ввода в режиме редактирования */
+.session-detail__info-input,
+.session-detail__info-select {
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  background: var(--white);
+  transition: all 0.2s;
+}
+
+.session-detail__info-input:focus,
+.session-detail__info-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.session-detail__notes-input {
+  width: 100%;
+  padding: var(--spacing-3);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.session-detail__notes-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* ✅ Кнопки сохранения/отмены */
+.session-detail__btn--cancel {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.session-detail__btn--cancel:hover {
+  background: var(--gray-300);
+}
+
+.session-detail__btn--save {
+  background: var(--gradient-primary);
+  color: var(--white);
+}
+
+.session-detail__btn--save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.session-detail__btn--save:disabled,
+.session-detail__btn--cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ✅ Подсказка режима редактирования */
+.session-detail__edit-hint {
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  font-weight: 500;
+  margin-left: var(--spacing-2);
+}
+
+/* ✅ Поля ввода в таблице сетов */
+.session-detail__sets-input {
+  width: 100%;
+  padding: var(--spacing-1) var(--spacing-2);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.session-detail__sets-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.session-detail__sets-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--success-color);
+}
+
+/* ✅ Кнопка добавить сет */
+.session-detail__btn--add-set {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: var(--spacing-2);
+}
+
+.session-detail__btn--add-set:hover {
+  background: var(--gray-200);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* ✅ Кнопка удалить сет */
+.session-detail__btn--remove-set {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--gray-300);
+  color: var(--gray-700);
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.session-detail__btn--remove-set:hover:not(:disabled) {
+  background: var(--danger-color);
+  color: var(--white);
+}
+
+.session-detail__btn--remove-set:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ✅ Заметки к упражнению (inline) */
+.session-detail__notes-input-inline {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.session-detail__notes-input-inline:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* ✅ Подсвечивание редактируемых строк */
+.session-detail__sets-row:has(.session-detail__sets-input:focus) {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}

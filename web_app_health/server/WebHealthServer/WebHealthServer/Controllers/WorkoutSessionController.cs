@@ -145,5 +145,20 @@ namespace WebHealthServer.Controllers
                 throw new Exception("Client ID not found in token claims");
             return int.Parse(claim.Value);
         }
+
+
+        [HttpPut("{id}/exercises")]
+        public async Task<IActionResult> UpdateExercises(int id, [FromBody] List<UpdateWorkoutSessionExerciseDto> dto)
+        {
+            try
+            {
+                var result = await _service.UpdateSessionExercisesAsync(id, dto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

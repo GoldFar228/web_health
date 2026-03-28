@@ -1,32 +1,33 @@
-/**
- * Декодирует payload из JWT-токена (без проверки подписи!)
- */
-export const decodeJwt = (token: string): any | null => {
+// /src/utils/jwtUtils.ts
+
+// ✅ Проверка истечения токена
+export const isTokenExpired = (token: string | null): boolean => {
+  if (!token) return true;
+  
   try {
-    const base64Url = token.split('.')[1]; // payload — вторая часть
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    );
-    return JSON.parse(jsonPayload);
-  } catch (error) {
-    console.warn('Failed to decode JWT token:', error);
-    return null;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp;
+    
+    if (!exp) return false;  // Если нет exp — считаем валидным
+    
+    // Exp в секундах, Date.now() в миллисекундах
+    return exp * 1000 < Date.now();
+  } catch {
+    return true;
   }
 };
 
-/**
- * Проверяет, истёк ли срок действия токена
- */
-export const isTokenExpired = (token: string): boolean => {
-  const decoded = decodeJwt(token);
-  if (!decoded || !decoded.exp) {
-    return true; // если нет exp — считаем токен недействительным
+// ✅ Получить Id пользователя из токена
+export const getUserIdFromToken = (token: string | null): number | null => {
+  if (!token) return null;
+  
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] 
+           || payload['sub'] 
+           || payload['id']
+           || null;
+  } catch {
+    return null;
   }
-
-  const currentTime = Math.floor(Date.now() / 1000); // текущее время в секундах
-  return decoded.exp < currentTime;
 };

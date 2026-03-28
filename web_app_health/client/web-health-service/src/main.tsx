@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/Home' element={<HomePage />} />
-          <Route path='/Trainings' element={<WorkoutPage />} />
+          {/* <Route path='/Trainings' element={<WorkoutPage />} /> */}
           <Route path='/Auth/*' element={<AuthorizePage />} />
           <Route path='/Diets' element={
             <PrivateRoute>
@@ -33,6 +33,11 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/Profile' element={
             <PrivateRoute>
               <ProfilePage />
+            </PrivateRoute>
+          } />
+          <Route path='/Trainings' element={
+            <PrivateRoute>
+              <WorkoutPage />
             </PrivateRoute>
           } />
           <Route path='/Excuse' element={<ExcusePage />} />

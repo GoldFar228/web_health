@@ -2,12 +2,14 @@
 
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit';
 import { workoutApi } from '../services/workoutApi';
-import type { 
-  WorkoutSession, 
-  Exercise, 
-  CreateWorkoutSessionDto, 
+import type {
+  WorkoutSession,
+  Exercise,
+  CreateWorkoutSessionDto,
   WorkoutStatus,
-  WorkoutSet
+  WorkoutSet,
+  UpdateWorkoutSessionDto,
+  UpdateWorkoutSessionExerciseDto
 } from '../types/workout';
 
 interface WorkoutState {
@@ -72,15 +74,35 @@ export const deleteWorkoutSession = createAsyncThunk(
   }
 );
 
-// ✅ Helper для пересчёта фактических значений
-function recalculateActuals(exercise: any) {
+// ✅ Helper для пересчёта агрегатов
+function recalculateAggregates(exercise: any) {
   const completedSets = exercise.sets.filter((s: WorkoutSet) => s.completed);
-  exercise.actualSets = completedSets.length;
-  exercise.actualReps = completedSets.reduce((sum: number, s: WorkoutSet) => sum + s.reps, 0);
-  exercise.actualWeightKg = completedSets.length > 0 
-    ? Math.round(completedSets.reduce((sum: number, s: WorkoutSet) => sum + s.weightKg, 0) / completedSets.length * 10) / 10
-    : 0;
+
+  exercise.completedSets = completedSets.length;
+  exercise.totalReps = completedSets.reduce((sum: number, s: WorkoutSet) => sum + s.reps, 0);
+  exercise.totalTonnage = completedSets.reduce((sum: number, s: WorkoutSet) => sum + (s.reps * s.weightKg), 0);
 }
+
+export const updateWorkoutSession = createAsyncThunk(
+  'workout/updateSession',
+  async ({ id, dto }: { id: number; dto: UpdateWorkoutSessionDto }, { rejectWithValue }) => {
+    try {
+      return await workoutApi.updateSession(id, dto);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update session');
+    }
+  }
+);
+export const updateSessionExercises = createAsyncThunk(
+  'workout/updateSessionExercises',
+  async ({ sessionId, exercises }: { sessionId: number; exercises: UpdateWorkoutSessionExerciseDto[] }, { rejectWithValue }) => {
+    try {
+      return await workoutApi.updateSessionExercises(sessionId, exercises);
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data?.message || 'Failed to update exercises');
+    }
+  }
+);
 
 const workoutSlice = createSlice({
   name: 'workout',
@@ -89,23 +111,23 @@ const workoutSlice = createSlice({
     setCurrentSession: (state, action: PayloadAction<WorkoutSession | null>) => {
       state.currentSession = action.payload;
     },
-    
+
     addExerciseToSession: (state, action: PayloadAction<Exercise>) => {
       const defaultSets: WorkoutSet[] = [
         { order: 0, reps: 10, weightKg: 0, completed: false },
         { order: 1, reps: 10, weightKg: 0, completed: false },
         { order: 2, reps: 10, weightKg: 0, completed: false }
       ];
-      
+
       if (state.currentSession) {
         state.currentSession.exercises.push({
           exerciseId: action.payload.id,
           exerciseName: action.payload.name,
           muscleGroup: action.payload.muscleGroup,
           sets: defaultSets,
-          actualSets: 0,
-          actualReps: 0,
-          actualWeightKg: 0,
+          completedSets: 0,
+          totalReps: 0,
+          totalTonnage: 0,
           order: state.currentSession.exercises.length,
           notes: ''
         });
@@ -120,16 +142,16 @@ const workoutSlice = createSlice({
             exerciseName: action.payload.name,
             muscleGroup: action.payload.muscleGroup,
             sets: defaultSets,
-            actualSets: 0,
-            actualReps: 0,
-            actualWeightKg: 0,
+            completedSets: 0,
+            totalReps: 0,
+            totalTonnage: 0,
             order: 0,
             notes: ''
           }]
         };
       }
     },
-    
+
     removeExerciseFromSession: (state, action: PayloadAction<number>) => {
       if (state.currentSession) {
         state.currentSession.exercises = state.currentSession.exercises.filter(
@@ -137,8 +159,7 @@ const workoutSlice = createSlice({
         );
       }
     },
-    
-    // ✅ ДОБАВЛЕНО: Обновление упражнения
+
     updateExerciseInSession: (state, action: PayloadAction<{
       index: number;
       field: string;
@@ -151,8 +172,7 @@ const workoutSlice = createSlice({
         }
       }
     },
-    
-    // ✅ Обновление сета
+
     updateSetInExercise: (state, action: PayloadAction<{
       exerciseIndex: number;
       setIndex: number;
@@ -163,12 +183,11 @@ const workoutSlice = createSlice({
         const exercise = state.currentSession.exercises[action.payload.exerciseIndex];
         if (exercise?.sets[action.payload.setIndex]) {
           (exercise.sets[action.payload.setIndex] as any)[action.payload.field] = action.payload.value;
-          recalculateActuals(exercise);
+          recalculateAggregates(exercise);
         }
       }
     },
-    
-    // ✅ ДОБАВЛЕНО: Добавить сет
+
     addSetToExercise: (state, action: PayloadAction<{ exerciseIndex: number }>) => {
       if (state.currentSession) {
         const exercise = state.currentSession.exercises[action.payload.exerciseIndex];
@@ -180,12 +199,17 @@ const workoutSlice = createSlice({
             weightKg: lastSet?.weightKg || 0,
             completed: false
           });
-          recalculateActuals(exercise);
+          recalculateAggregates(exercise);
         }
       }
     },
-    
-    // ✅ ДОБАВЛЕНО: Удалить сет
+    updateSessionInStore: (state, action: PayloadAction<WorkoutSession>) => {
+      const index = state.sessions.findIndex(s => s.id === action.payload.id);
+      if (index !== -1) {
+        state.sessions[index] = action.payload;
+      }
+    },
+
     removeSetFromExercise: (state, action: PayloadAction<{
       exerciseIndex: number;
       setIndex: number;
@@ -195,18 +219,13 @@ const workoutSlice = createSlice({
         if (exercise?.sets.length > 1) {
           exercise.sets.splice(action.payload.setIndex, 1);
           exercise.sets.forEach((set, idx) => set.order = idx);
-          recalculateActuals(exercise);
+          recalculateAggregates(exercise);
         }
       }
     },
-    
-    clearError: (state) => {
-      state.error = null;
-    },
 
-    clearCurrentSession: (state) => {
-      state.currentSession = null;
-    },
+    clearError: (state) => { state.error = null; },
+    clearCurrentSession: (state) => { state.currentSession = null; },
   },
   extraReducers: (builder) => {
     builder
@@ -219,20 +238,49 @@ const workoutSlice = createSlice({
       .addCase(createWorkoutSession.pending, (state) => { state.loading = true; state.error = null; })
       .addCase(createWorkoutSession.fulfilled, (state, action) => { state.loading = false; state.sessions.unshift(action.payload); state.currentSession = null; })
       .addCase(createWorkoutSession.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-      .addCase(deleteWorkoutSession.fulfilled, (state, action) => { state.sessions = state.sessions.filter(s => s.id !== action.payload); });
+      .addCase(deleteWorkoutSession.fulfilled, (state, action) => { state.sessions = state.sessions.filter(s => s.id !== action.payload); })
+      .addCase(updateWorkoutSession.fulfilled, (state, action) => {
+        const index = state.sessions.findIndex(s => s.id === action.payload.id);
+        if (index !== -1) {
+          state.sessions[index] = action.payload;
+        }
+      })
+      .addCase(updateWorkoutSession.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateWorkoutSession.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateSessionExercises.fulfilled, (state, action) => {
+        const index = state.sessions.findIndex(s => s.id === action.payload.id);
+        if (index !== -1) {
+          state.sessions[index] = action.payload;
+        }
+      })
+      .addCase(updateSessionExercises.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateSessionExercises.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+
   }
 });
 
-// ✅ Теперь все экспорты соответствуют редюсерам
 export const {
   setCurrentSession,
   addExerciseToSession,
   removeExerciseFromSession,
-  updateExerciseInSession,      // ✅ Теперь есть в reducers
+  updateExerciseInSession,
   updateSetInExercise,
-  addSetToExercise,             // ✅ Теперь есть в reducers
-  removeSetFromExercise,        // ✅ Теперь есть в reducers
+  addSetToExercise,
+  removeSetFromExercise,
   clearCurrentSession,
+  updateSessionInStore,
   clearError
 } = workoutSlice.actions;
 

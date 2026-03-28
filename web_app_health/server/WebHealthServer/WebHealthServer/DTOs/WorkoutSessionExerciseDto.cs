@@ -8,25 +8,19 @@ namespace WebHealthServer.Models
     public class WorkoutSessionExerciseDto
     {
         public int Id { get; set; }
-
-        public int WorkoutSessionId { get; set; }
-
         public int ExerciseId { get; set; }
-
-        public string? ExerciseName { get; set; }
-
+        public string ExerciseName { get; set; } = string.Empty;
         public string? MuscleGroup { get; set; }
 
-        public int? PlannedSets { get; set; }
-        public int? PlannedReps { get; set; }
-        public int? PlannedWeightKg { get; set; }
+        // ✅ Массив сетов
+        public List<WorkoutSetDto> Sets { get; set; } = new();
 
-        public int ActualSets { get; set; }
-        public int ActualReps { get; set; }
-        public int? ActualWeightKg { get; set; }
+        // ✅ Агрегаты
+        public int CompletedSets { get; set; }
+        public int TotalReps { get; set; }
+        public decimal TotalTonnage { get; set; }
 
         public int Order { get; set; }
-
         public string Notes { get; set; } = string.Empty;
     }
 }

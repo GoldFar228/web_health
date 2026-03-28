@@ -1,32 +1,291 @@
-.header-container{
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-    position: sticky;
-    border: 2px solid orange;
-    background-color: #FFFFFF;
+/* /src/components/Header/HeaderComponent.css */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 2px solid var(--gray-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-.header-item{
-    border:1px solid red;
-    color: #1F2937;
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
 }
-.header-item:hover{
-    color: #4CAF50;
-    cursor: pointer;
-    transition: ease-in;
-    transition-duration: 0.2s;
+
+/* ============================================
+   ЛОГОТИП
+   ============================================ */
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
-.header-item:active{
-    color: #addeb0;
-    transition: ease-in;
-    transition-duration: 0.2s;
+
+.header__logo:hover {
+  transform: scale(1.05);
 }
-.header-item:nth-child(1){
-    margin-left: 6rem;
+
+.header__logo-icon {
+  font-size: 1.75rem;
 }
-.header-item:last-child{
-    margin-right: 6rem;
+
+.header__logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.hidden{
+
+/* ============================================
+   НАВИГАЦИЯ (ДЕСКТОП)
+   ============================================ */
+
+.header__nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header__nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+}
+
+.header__nav-item {
+  position: relative;
+}
+
+.header__nav-item--hidden {
+  display: none;
+}
+
+.header__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  color: var(--gray-700);
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.header__nav-link:hover {
+  background: var(--gray-100);
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+.header__nav-link--user {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  font-weight: 400;
+}
+
+.header__nav-link--login {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--white);
+}
+
+.header__nav-link--login:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.header__nav-link--logout {
+  background: var(--gray-100);
+  color: var(--gray-700);
+  border: 2px solid var(--gray-300);
+}
+
+.header__nav-link--logout:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: var(--white);
+}
+
+/* ============================================
+   МОБИЛЬНАЯ КНОПКА
+   ============================================ */
+
+.header__mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 101;
+}
+
+.header__toggle-line {
+  width: 24px;
+  height: 3px;
+  background: var(--gray-700);
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.header__mobile-toggle--open .header__toggle-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+  background: #667eea;
+}
+
+.header__mobile-toggle--open .header__toggle-line:nth-child(2) {
+  opacity: 0;
+}
+
+.header__mobile-toggle--open .header__toggle-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+  background: #667eea;
+}
+
+/* ============================================
+   МОБИЛЬНОЕ МЕНЮ
+   ============================================ */
+
+.header__mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 2px solid var(--gray-200);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.header__mobile-menu--open {
+  max-height: 500px;
+  padding: 1rem 0;
+}
+
+.header__mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.header__mobile-nav-item {
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.header__mobile-nav-item:last-child {
+  border-bottom: none;
+}
+
+.header__mobile-nav-item--hidden {
+  display: none;
+}
+
+.header__mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+  color: var(--gray-700);
+  font-size: 1rem;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  transition: all 0.2s;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.header__mobile-nav-link:hover {
+  background: var(--gray-50);
+  color: #667eea;
+  padding-left: 1.25rem;
+}
+
+.header__mobile-nav-link--accent {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--white);
+  justify-content: center;
+}
+
+.header__mobile-nav-link--accent:hover {
+  opacity: 0.9;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: var(--white);
+}
+
+/* ============================================
+   АДАПТИВНОСТЬ
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .header__nav {
     display: none;
+  }
+
+  .header__mobile-toggle {
+    display: flex;
+  }
+
+  .header__mobile-menu {
+    display: block;
+  }
+
+  .header__container {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header__logo-text {
+    font-size: 1.25rem;
+  }
+
+  .header__logo-icon {
+    font-size: 1.5rem;
+  }
+}
+
+/* ============================================
+   АНИМАЦИИ
+   ============================================ */
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header__mobile-menu--open {
+  animation: slideDown 0.3s ease-out;
 }

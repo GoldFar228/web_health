@@ -1,5 +1,3 @@
-// /src/components/Workout/ExerciseSelectorComponent/ExerciseSelector.tsx
-
 import React, { useState } from 'react';
 import { workoutApi } from '../../../services/workoutApi';
 import type { Exercise } from '../../../types/workout';

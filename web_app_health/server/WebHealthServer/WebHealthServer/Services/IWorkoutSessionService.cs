@@ -15,5 +15,6 @@ namespace WebHealthServer.Services
         Task<WorkoutSessionDto> UpdateExerciseInSessionAsync(int sessionId, int exerciseId, UpdateSessionExerciseDto dto);
         Task AddExerciseToSessionAsync(int sessionId, CreateWorkoutSessionExerciseDto dto);
         Task RemoveExerciseFromSessionAsync(int sessionId, int exerciseId);
+        Task<WorkoutSessionDto> UpdateSessionExercisesAsync(int sessionId, List<UpdateWorkoutSessionExerciseDto> exercisesDto);
     }
 }

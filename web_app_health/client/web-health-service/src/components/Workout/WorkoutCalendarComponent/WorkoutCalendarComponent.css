@@ -1,0 +1,317 @@
+/* /src/components/Workout/WorkoutCalendar/WorkoutCalendar.css */
+
+.workout-calendar {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-6);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Header */
+.workout-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-6);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.workout-calendar__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  text-transform: capitalize;
+}
+
+.workout-calendar__nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--gray-100);
+  border: 2px solid var(--gray-300);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-700);
+}
+
+.workout-calendar__nav-btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.workout-calendar__today-btn {
+  padding: var(--spacing-2) var(--spacing-4);
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.workout-calendar__today-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Weekdays */
+.workout-calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+}
+
+.workout-calendar__weekday {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  padding: var(--spacing-2);
+}
+
+/* Grid */
+.workout-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--spacing-2);
+}
+
+/* Day Cell */
+.workout-calendar__day {
+  aspect-ratio: 1;
+  min-height: 100px;
+  border-radius: var(--radius-lg);
+  background: var(--gray-50);
+  border: 2px solid var(--gray-200);
+  padding: var(--spacing-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.workout-calendar__day:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.workout-calendar__day--empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.workout-calendar__day--today {
+  border-color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.workout-calendar__day--completed {
+  background: linear-gradient(135deg, #d1fae5 0%, var(--white) 100%);
+  border-color: #059669;
+}
+
+.workout-calendar__day--planned {
+  background: linear-gradient(135deg, #dbeafe 0%, var(--white) 100%);
+  border-color: #3b82f6;
+}
+
+/* Day Number */
+.workout-calendar__day-number {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.workout-calendar__today-indicator {
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Sessions Dots */
+.workout-calendar__day-sessions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--spacing-2);
+  flex: 1;
+  align-content: flex-start;
+}
+
+.workout-calendar__session-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.workout-calendar__session-dot:hover {
+  transform: scale(1.3);
+}
+
+.workout-calendar__session-dot--completed {
+  background: #059669;
+}
+
+.workout-calendar__session-dot--planned {
+  background: #3b82f6;
+}
+
+.workout-calendar__session-dot--in-progress {
+  background: #f59e0b;
+}
+
+.workout-calendar__session-dot--cancelled {
+  background: #ef4444;
+}
+
+.workout-calendar__session-more {
+  font-size: 0.7rem;
+  color: var(--gray-500);
+  display: flex;
+  align-items: center;
+}
+
+/* Add Button */
+.workout-calendar__add-btn {
+  position: absolute;
+  bottom: var(--spacing-2);
+  right: var(--spacing-2);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--white);
+  border: 2px solid var(--gray-300);
+  font-size: 1.25rem;
+  color: var(--gray-500);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.workout-calendar__day:hover .workout-calendar__add-btn {
+  opacity: 1;
+}
+
+.workout-calendar__add-btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* Legend */
+.workout-calendar__legend {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-6);
+  padding-top: var(--spacing-4);
+  border-top: 2px solid var(--gray-200);
+  flex-wrap: wrap;
+}
+
+.workout-calendar__legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+
+.workout-calendar__legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+}
+
+.workout-calendar__legend-dot--completed {
+  background: #059669;
+}
+
+.workout-calendar__legend-dot--planned {
+  background: #3b82f6;
+}
+
+.workout-calendar__legend-dot--in-progress {
+  background: #f59e0b;
+}
+
+.workout-calendar__legend-dot--cancelled {
+  background: #ef4444;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+  .workout-calendar__day {
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .workout-calendar__grid {
+    gap: var(--spacing-1);
+  }
+  
+  .workout-calendar__day {
+    min-height: 60px;
+    padding: var(--spacing-1);
+  }
+  
+  .workout-calendar__day-number {
+    font-size: 0.9rem;
+  }
+  
+  .workout-calendar__session-dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .workout-calendar__add-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+  }
+  
+  .workout-calendar__legend {
+    gap: var(--spacing-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .workout-calendar__header {
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+  }
+  
+  .workout-calendar__title {
+    font-size: 1.25rem;
+    order: 3;
+    width: 100%;
+    text-align: center;
+  }
+}

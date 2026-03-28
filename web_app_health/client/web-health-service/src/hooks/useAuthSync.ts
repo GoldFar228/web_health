@@ -1,3 +1,4 @@
+// /src/hooks/useAuthSync.ts
 
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -21,15 +22,12 @@ export const useAuthSync = () => {
       }
     };
 
-    // Проверяем при монтировании
     checkAuth();
     
-    // Проверяем при фокусе окна
     const handleFocus = () => {
       checkAuth();
     };
     
-    // Проверяем каждые 2 секунды
     const interval = setInterval(checkAuth, 2000);
     
     window.addEventListener('focus', handleFocus);
