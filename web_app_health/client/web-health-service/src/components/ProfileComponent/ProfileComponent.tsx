@@ -2,7 +2,7 @@ import axios from "axios";
 import "./ProfileComponent.css"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthSignalR } from "../../hooks/useAuthSignalR";
+// import { useAuthSignalR } from "../../hooks/useAuthSignalR";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store";
 import { updateProfile } from "../../store/authSlice";
@@ -32,7 +32,7 @@ const ProfileComponent = () => {
     };
 
     const navigate = useNavigate();
-    useAuthSignalR(handleLogout);
+    // useAuthSignalR(handleLogout);
 
     useEffect(() => {
         if (isAuthenticated && profile) {

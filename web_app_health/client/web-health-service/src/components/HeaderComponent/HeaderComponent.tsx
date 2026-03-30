@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
+import { useAuthSignalR } from "../../hooks/useAuthSignalR";  // ✅ Импортируем
 import type { RootState } from "../../store";
 import "./HeaderComponent.css";
 
@@ -13,11 +14,22 @@ const HeaderComponent = () => {
     const navigate = useNavigate();
     const profile = useSelector((state: RootState) => state.auth.profile);
     const userName = profile?.firstName || 'Гость';
-    console.log(profile);
     const [isAuthenticated, setIsAuthenticated] = useState(
         !!localStorage.getItem("token")
     );
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // ✅ Обработчик логаута для SignalR (глобальный)
+    const handleLogout = () => {
+        console.log('🚪 [SignalR] Logout triggered from server');
+        localStorage.removeItem("token");
+        dispatch(logout());
+        setIsAuthenticated(false);
+        navigate('/Auth/Login', { replace: true });
+    };
+
+    // ✅ SignalR подключается ГЛОБАЛЬНО (хедер на всех страницах)
+    useAuthSignalR(handleLogout);
 
     // ✅ Синхронизация состояния аутентификации
     useEffect(() => {
@@ -41,10 +53,14 @@ const HeaderComponent = () => {
     const handleNavigation = (path: string, event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.currentTarget as HTMLDivElement;
 
-        if (target.textContent === "Logout") {
+        // ✅ Проверка по тексту кнопки (без эмодзи)
+        if (target.textContent?.includes("Выйти")) {
+            console.log('🚪 [Header] Logout clicked');
             localStorage.removeItem("token");
             dispatch(logout());
             setIsAuthenticated(false);
+            navigate('/Auth/Login', { replace: true });
+            return;
         }
         
         setIsMobileMenuOpen(false);
@@ -52,10 +68,10 @@ const HeaderComponent = () => {
     };
 
     const navLinks = [
-        { path: "../Home", label: "🏠 Home" },
-        { path: "../Trainings", label: "🏋️ Programs" },
-        { path: "../Diets", label: "🍎 Diets" },
-        { path: "../Profile", label: "👤 Profile", authRequired: true },
+        { path: "../Home", label: "🏠 Домой" },
+        { path: "../Trainings", label: "🏋️ Тренировки" },
+        { path: "../Diets", label: "🍎 Питание" },
+        { path: "../Profile", label: "👤 Профиль", authRequired: true },
     ];
 
     return (
@@ -92,7 +108,7 @@ const HeaderComponent = () => {
                                     className={`header__nav-link header__nav-link--${isAuthenticated ? 'logout' : 'login'}`}
                                     onClick={(e) => handleNavigation("../Auth/Login", e)}
                                 >
-                                    {isAuthenticated ? "🚪 Logout" : "🔑 Login"}
+                                    {isAuthenticated ? "🚪 Выйти" : "🔑 Войти"}
                                 </div>
                             </li>
                         </ul>
@@ -131,7 +147,7 @@ const HeaderComponent = () => {
                                 className="header__mobile-nav-link header__mobile-nav-link--accent"
                                 onClick={(e) => handleNavigation("../Auth/Login", e)}
                             >
-                                {isAuthenticated ? "🚪 Logout" : "🔑 Login"}
+                                {isAuthenticated ? "🚪 Выйти" : "🔑 Войти"}
                             </div>
                         </li>
                     </ul>

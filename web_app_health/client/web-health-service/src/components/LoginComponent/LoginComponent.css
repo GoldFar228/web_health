@@ -1,30 +1,260 @@
-.login-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    width: fit-content;
-    margin: 0 auto;
-}
-.login-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-input{
-    margin: 0 10px;
+/* /src/components/LoginComponent/LoginComponent.css */
+
+.login-form {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem;
+  border: 1px solid #e5e7eb;
+  animation: slideUp 0.4s ease-out;
 }
 
-.register-link{
-    margin: 2vh;
-    border: 1px solid green;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.register-link:hover{
-    color: grey;
-    cursor: pointer;
+
+/* Header */
+.login-form__header {
+  text-align: center;
+  margin-bottom: 2rem;
 }
-.register-link:active{
-    color:lightblue
+
+.login-form__logo {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.login-form__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-form__subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Form Body */
+.login-form__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Fields */
+.login-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.login-form__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.login-form__input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.login-form__input::placeholder {
+  color: #9ca3af;
+}
+
+.login-form__input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+  transform: translateY(-1px);
+}
+
+.login-form__input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Error */
+.login-form__error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 0.75rem;
+  color: #dc2626;
+  font-size: 0.9rem;
+  animation: shake 0.4s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.login-form__error-icon {
+  font-size: 1.1rem;
+}
+
+.login-form__error-text {
+  flex: 1;
+}
+
+/* Submit Button */
+.login-form__submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+}
+
+.login-form__submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.login-form__submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-form__submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner */
+.login-form__spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer */
+.login-form__footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.login-form__footer-text {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.login-form__link {
+  color: #667eea;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.login-form__link:hover {
+  color: #5a67d8;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .login-form {
+    padding: 1.5rem;
+  }
+
+  .login-form__title {
+    font-size: 1.5rem;
+  }
+
+  .login-form__logo {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form {
+    padding: 1.25rem;
+    border-radius: 1rem;
+  }
+
+  .login-form__title {
+    font-size: 1.25rem;
+  }
+
+  .login-form__subtitle {
+    font-size: 0.85rem;
+  }
+
+  .login-form__input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  .login-form__submit-btn {
+    padding: 0.875rem;
+    font-size: 0.95rem;
+  }
 }

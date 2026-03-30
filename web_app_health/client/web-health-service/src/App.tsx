@@ -19,11 +19,17 @@ function App() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
+ 
+  // ✅ Обработчик логаута для SignalR
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setKey(prev => prev + 1); // Меняем key → перерендер
-    navigate('/Auth/Login');
+    console.log('🚪 [App] Logout triggered by SignalR');
+    localStorage.removeItem('token');  // ✅ Удаляем токен
+    dispatch(logout());  // ✅ Очищаем Redux
+    setKey(prev => prev + 1);  // ✅ Перерендер
+    navigate('/Auth/Login', { replace: true });  // ✅ Перенаправление
   };
+  // ✅ SignalR для отслеживания токена
+  useAuthSignalR(handleLogout);
 
   useEffect(() => {
     const initializeAuth = async () => {
