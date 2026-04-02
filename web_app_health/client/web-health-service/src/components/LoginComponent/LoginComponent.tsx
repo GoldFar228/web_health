@@ -41,14 +41,18 @@ const LoginComponent = () => {
         try {
             const res = await axios.post("https://localhost:7073/api/Auth/Login/login", payload);
             const { token, ErrorMessage } = res.data;
-
             if (ErrorMessage) {
                 dispatch(loginFailure(ErrorMessage));
                 setError(ErrorMessage);
                 setIsLoading(false);
                 return;
             }
-
+            if(res.data.errorMessage === "Неверная почта или пароль"){
+                dispatch(loginFailure(res.data.errorMessage));
+                setError(res.data.errorMessage);
+                setIsLoading(false);
+                return;
+            }
             if (!token) {
                 dispatch(loginFailure("Не получен токен"));
                 setError("Не получен токен");

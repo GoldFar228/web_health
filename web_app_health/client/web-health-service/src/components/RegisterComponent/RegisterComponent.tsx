@@ -44,12 +44,20 @@ const RegisterComponent = () => {
                     }
                 }
             );
-            
+
             localStorage.setItem("token", response.data.token);
             navigateTo("../../Home");
         }
         catch (error: any) {
-            setError(error.message || 'Ошибка регистрации');
+            if (error.response.data === "User exists") {
+                setError("Пользователь с таким email существует")
+            }
+            if(error.response.errorMessage === "Неверная почта или пароль"){
+                setError("Неверная почта или пароль")
+            }
+            else {
+                setError(error.message || 'Ошибка регистрации');
+            }
         } finally {
             setIsLoading(false);
         }
