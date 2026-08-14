@@ -50,7 +50,6 @@ export const MealEntryForm: React.FC<MealEntryFormProps> = ({
   const [selectedServing, setSelectedServing] = useState<FatSecretServing | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // 🔥 Загрузка деталей продукта при выборе
   useEffect(() => {
     const loadFoodDetails = async () => {
       if (!selectedFood?.fatSecretFoodId || selectedFood.isDetailsLoaded) return;

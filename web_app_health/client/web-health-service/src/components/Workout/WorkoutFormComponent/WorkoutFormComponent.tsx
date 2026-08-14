@@ -116,19 +116,16 @@ export const WorkoutForm: React.FC<Props> = ({ onSuccess, onCancel, isOpen }) =>
 
   const exercises = currentSession?.exercises || [];
 
-  // ✅ Не рендерим, если закрыто (оптимизация)
   if (!isOpen) return null;
 
   return (
     <>
-      {/* ✅ Overlay (просто затемнение, без blur) */}
       <div 
         className="workout-drawer-overlay" 
         onClick={handleCancel}
         aria-hidden="true"
       />
       
-      {/* ✅ Drawer панель */}
       <div className={`workout-drawer ${isOpen ? 'workout-drawer--open' : ''}`}>
         <div className="workout-drawer__header">
           <h2 className="workout-drawer__title">💪 Новая тренировка</h2>

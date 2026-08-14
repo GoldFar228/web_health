@@ -1,5 +1,4 @@
 // /src/components/RegisterComponent/RegisterComponent.tsx
-
 import axios from "axios";
 import "./RegisterComponent.css"
 import { useState } from "react";

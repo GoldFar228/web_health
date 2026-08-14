@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <BrowserRouter> {/* 2. Оборачиваем App в BrowserRouter */}
         <HeaderComponent />
-        <Routes>
+        <Routes>    
           <Route path='/' element={<App />} />
           <Route path='/Home' element={<HomePage />} />
           {/* <Route path='/Trainings' element={<WorkoutPage />} /> */}

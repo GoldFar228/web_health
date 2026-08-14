@@ -57,7 +57,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     }
   };
 
-  // ✅ Обновление сета в упражнении
   const handleUpdateSet = (exerciseIndex: number, setIndex: number, field: keyof WorkoutSet, value: any) => {
     setEditedExercises(prev => {
       const updated = prev.map((ex, idx) => {
@@ -78,7 +77,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     });
   };
 
-  // ✅ Добавить сет к упражнению (исправлено)
   const handleAddSet = (exerciseIndex: number) => {
     setEditedExercises(prev => {
       const updated = prev.map((ex, idx) => {
@@ -103,7 +101,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     });
   };
 
-  // ✅ Удалить сет из упражнения (исправлено)
   const handleRemoveSet = (exerciseIndex: number, setIndex: number) => {
     setEditedExercises(prev => {
       const updated = prev.map((ex, idx) => {
@@ -118,7 +115,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     });
   };
 
-  // ✅ Обновить заметки упражнения (исправлено)
   const handleUpdateExerciseNotes = (exerciseIndex: number, notes: string) => {
     setEditedExercises(prev => {
       const updated = prev.map((ex, idx) => {
@@ -175,8 +171,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     }
   };
 
-
-  // ✅ Отмена редактирования (с глубоким копированием)
   const handleCancelEdit = () => {
     setIsEditing(false);
     setEditedStatus(session.status);
@@ -199,7 +193,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
     });
   };
 
-  // ✅ Подсчёт статистики из отредактированных данных
   const totalTonnage = editedExercises.reduce((sum, ex) => {
     const completedSets = ex.sets.filter(s => s.completed);
     return sum + completedSets.reduce((s, set) => s + (set.reps * set.weightKg), 0);
@@ -216,7 +209,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
   return (
     <div className="session-detail-overlay" onClick={onClose}>
       <div className="session-detail" onClick={(e) => e.stopPropagation()}>
-        {/* Заголовок */}
         <div className="session-detail__header">
           <div className="session-detail__title-section">
             <h2 className="session-detail__title">Детали тренировки</h2>
@@ -238,7 +230,6 @@ export const WorkoutSessionDetail: React.FC<Props> = ({ session, onClose, onEdit
           </button>
         </div>
 
-        {/* Основная информация */}
         <div className="session-detail__info">
           <div className="session-detail__info-grid">
             <div className="session-detail__info-item">

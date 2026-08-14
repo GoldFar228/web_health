@@ -58,36 +58,4 @@ export const useProfile = () => {
     loadMyProfile,
     isAuthenticated: !!profile && !!localStorage.getItem('token'),
   };
-  // Автоматическая загрузка при монтировании
-  // useEffect(() => {
-  //   const handleStorageChange = (e: StorageEvent) => {
-  //     if (e.key === 'token' && !e.newValue) {
-  //       // Токен удален - принудительный ререндер
-  //       setForceUpdate(prev => prev + 1);
-  //       dispatch(logout());
-  //     }
-  //   };
-
-  //   window.addEventListener('storage', handleStorageChange);
-
-  //   return () => {
-  //     window.removeEventListener('storage', handleStorageChange);
-  //   };
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-
-  //   if (!token && profile) {
-  //     // Если нет токена, но есть профиль - очищаем
-  //     dispatch(logout());
-  //   }
-  // });
-  // return {
-  //   profile,
-  //   isLoading: !profile && !!localStorage.getItem('token'),
-  //   loadMyProfile,
-  //   isAuthenticated: !!profile && !!localStorage.getItem('token'),
-  //   forceUpdate,
-  // };
 };
